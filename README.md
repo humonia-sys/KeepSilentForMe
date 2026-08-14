@@ -180,7 +180,8 @@ L1-L4 完成后，玩家可以把本章吞下的所有字从碎片池拖进私�
 - **Pointer Events**：统一处理鼠标和触摸拖拽
 - **localStorage**：本地存档，标题页提供继续/重新开始；暂未实现导出/导入
 - **Web Audio**：用户交互后生成轻量提示音，可在右上角关闭
-- **纯原生JS**：无框架依赖，总代码量约1500-2000行
+- **纯原生JS**：无框架依赖；运行时按配置/语言、视频、音频、台词交互、记忆和流程拆成 `web/js/runtime/` 的顺序脚本，`web/js/main.js` 只负责最终启动
+- **可维护样式**：`web/css/style.css` 保持稳定入口，按 tokens、基础布局、组件、响应式四层导入规则
 
 桌面版在同一 Web 运行时外包裹 Tauri 2 壳；Tauri 构建前会把 `web/`、章节 JSON 和两套 manifest 组装到 `dist/tauri/`。
 
@@ -352,12 +353,14 @@ KeepSilentForMe/
 ├── scripts/prepare-tauri.mjs           # Tauri 运行时资源组装与路径改写
 ├── scripts/validate-chapters.mjs       # 章节 zone 与 remain 数据契约校验
 ├── scripts/validate-locales.mjs         # 四种语言的 offset、删词与键完整性校验
+├── scripts/validate-runtime-js.mjs      # 逐文件语法与 index 加载顺序校验
 ├── src-tauri/                           # Tauri 2 Rust 桌面壳与打包配置
 └── web/                                # 🌐 Web游戏目录（整页翻页 Demo）
     ├── README.md
     ├── index.html
-    ├── css/
-    ├── js/
+    ├── css/                            # style.css 聚合 tokens/base/components/responsive
+    ├── js/runtime/                     # 按功能顺序加载的运行时模块
+    ├── js/main.js                       # 最终 bindEvents/load 入口
     ├── fonts/                           # 🔤 随包发布的拉丁/西里尔字体子集
     └── (运行时从 art/ 与 script/ 读取资源)
 ```

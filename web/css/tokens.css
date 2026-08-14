@@ -1,0 +1,78 @@
+/* Design tokens, font faces, and document-wide defaults. */
+:root {
+  color-scheme: dark;
+  --ink: #0b0d0d;
+  --paper: #d6d8d3;
+  --paper-dim: #a6aba5;
+  --line: rgba(196, 203, 193, 0.22);
+  --line-strong: rgba(214, 221, 211, 0.46);
+  --signal: #a36f61;
+  --ui-font: "Keep Silent Sans", "Noto Sans", "Noto Sans SC", "PingFang SC", "Microsoft YaHei", sans-serif;
+  --display-font: "Keep Silent Sans", "Arial Narrow", "Noto Sans", "Noto Sans SC", sans-serif;
+}
+
+@font-face {
+  font-family: "Keep Silent Sans";
+  font-style: normal;
+  font-weight: 400 700;
+  font-display: swap;
+  src: url("../fonts/NotoSans-Latin.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: "Keep Silent Sans";
+  font-style: normal;
+  font-weight: 400 700;
+  font-display: swap;
+  src: url("../fonts/NotoSans-Cyrillic.woff2") format("woff2");
+  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+
+* { box-sizing: border-box; }
+
+html,
+body {
+  width: 100%;
+  min-width: 320px;
+  min-height: 100%;
+  margin: 0;
+  overflow: hidden;
+  background: var(--ink);
+  color: var(--paper);
+  font-family: var(--ui-font);
+}
+
+body { min-height: 100dvh; }
+button,
+img { user-select: none; -webkit-user-select: none; }
+button { font: inherit; }
+
+html[lang^="en"],
+html[lang^="de"],
+html[lang^="ru"] {
+  --ui-font: "Keep Silent Sans", "Noto Sans", "DejaVu Sans", sans-serif;
+  --display-font: "Keep Silent Sans", "Noto Sans", "DejaVu Sans", sans-serif;
+}
+
+html[lang^="en"] .title-content h1,
+html[lang^="de"] .title-content h1,
+html[lang^="ru"] .title-content h1 { letter-spacing: 0.055em; }
+
+html[lang^="en"] .title-tagline,
+html[lang^="de"] .title-tagline,
+html[lang^="ru"] .title-tagline,
+html[lang^="en"] .status-copy,
+html[lang^="de"] .status-copy,
+html[lang^="ru"] .status-copy,
+html[lang^="en"] .dialogue-text,
+html[lang^="de"] .dialogue-text,
+html[lang^="ru"] .dialogue-text,
+html[lang^="en"] .memory-copy,
+html[lang^="de"] .memory-copy,
+html[lang^="ru"] .memory-copy {
+  letter-spacing: 0;
+  hyphens: auto;
+  overflow-wrap: break-word;
+  word-break: normal;
+}

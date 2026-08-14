@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#0b0d0d" />
     <title>请替我沉默 · 可玩 Demo</title>
-    <link rel="stylesheet" href="css/style.css?v=i18n-1" />
+    <link rel="stylesheet" href="css/style.css?v=runtime-split-1" />
   </head>
   <body>
     <main id="app" class="app is-loading is-title-screen">
@@ -173,6 +173,17 @@
         </div>
       </section>
     </main>
-    <script type="module" src="js/main.js?v=i18n-1"></script>
+    <!-- Classic scripts are intentionally ordered: each chunk exposes the
+         helpers consumed by the chunks that follow it. -->
+    <script src="js/runtime/00-config-dom-state.js?v=runtime-split-1"></script>
+    <script src="js/runtime/10-locale.js?v=runtime-split-1"></script>
+    <script src="js/runtime/20-video.js?v=runtime-split-1"></script>
+    <script src="js/runtime/30-audio.js?v=runtime-split-1"></script>
+    <script src="js/runtime/40-runtime-state-chat.js?v=runtime-split-1"></script>
+    <script src="js/runtime/50-dialogue-drag.js?v=runtime-split-1"></script>
+    <script src="js/runtime/60-memory.js?v=runtime-split-1"></script>
+    <script src="js/runtime/70-flow.js?v=runtime-split-1"></script>
+    <script src="js/runtime/80-init.js?v=runtime-split-1"></script>
+    <script src="js/main.js?v=runtime-split-1"></script>
   </body>
 </html>

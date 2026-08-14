@@ -4,6 +4,11 @@
 通过 Pointer Events 处理鼠标和触摸拖拽，通过 `localStorage` 保存稳定章节、台词、zone
 ID、旗标和结局状态。简体中文、英文、德文和俄文都由同一套规则驱动；后三种在界面中标记为 Beta。
 
+运行时脚本按依赖顺序由 `index.html` 加载：`js/runtime/00-config-dom-state.js` 提供共享配置、DOM
+引用和状态，后续文件依次负责语言、视频、音频、章节状态/滚屏、台词拖拽、语言胃、流程与启动校验；
+`js/main.js` 只保留最终的事件绑定和 `load()` 调用。样式入口 `css/style.css` 依次导入
+`tokens.css`、`base.css`、`components.css` 和 `responsive.css`。
+
 ## 本地运行
 
 必须通过静态服务器打开，不能直接双击 `index.html`：
@@ -13,6 +18,9 @@ python3 -m http.server 8765 --directory .
 ```
 
 打开 <http://127.0.0.1:8765/web/>。
+
+提交前运行 `npm run validate:runtime-js`，它会对每个运行时脚本执行 `node --check`，并确认
+`index.html` 引用了全部文件且保持 `main.js` 最后加载。
 
 正常启动顺序为：
 
@@ -46,6 +54,7 @@ URL 参数是直接调试入口，启动时会跳过标题封面：
 
 ## 当前运行时边界
 
+- 运行时代码按职责拆在 `js/runtime/`：配置/状态、语言、视频、音频、存档与直播、台词拖拽、记忆层和流程初始化；`js/main.js` 只负责最后的事件绑定与启动。`index.html` 必须保持这些 classic script 的顺序，运行 `npm run validate:runtime-js` 会同时检查每个 chunk 的语法、引用完整性和入口顺序。
 - 句子原文只渲染一次，`Range.getClientRects()` 生成可换行、可重叠的透明命中层。
 - 玩家只能把黑条拖到预定义连续 zone；吸附后显示 HTML 反馈和整页切换动画。
 - 角色、朋友、消音体和结局已经绘制进 13 张整页 PNG，运行时不再叠加透明叙事层。

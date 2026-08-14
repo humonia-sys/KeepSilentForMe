@@ -2,6 +2,7 @@ import {
   cpSync,
   existsSync,
   mkdirSync,
+  readdirSync,
   readFileSync,
   rmSync,
   writeFileSync,
@@ -58,12 +59,27 @@ function copyManifestBackgrounds(sourceRoot, destinationRoot) {
   }
 }
 
+function runtimeFiles() {
+  const files = [resolve(distRoot, "index.html")];
+  const walk = (directory) => {
+    for (const entry of readdirSync(directory, { withFileTypes: true })) {
+      const filePath = resolve(directory, entry.name);
+      if (entry.isDirectory()) {
+        walk(filePath);
+      } else if (entry.isFile() && filePath.endsWith(".js")) {
+        files.push(filePath);
+      }
+    }
+  };
+  walk(resolve(distRoot, "js"));
+  return files;
+}
+
 rmSync(distRoot, { recursive: true, force: true });
 mkdirSync(distRoot, { recursive: true });
 cpSync(resolve(repositoryRoot, "web"), distRoot, { recursive: true });
 
-for (const file of ["index.html", "js/main.js"]) {
-  const filePath = resolve(distRoot, file);
+for (const filePath of runtimeFiles()) {
   const rewritten = readFileSync(filePath, "utf8")
     .replaceAll("../art/", "art/")
     .replaceAll("../script/", "script/");
@@ -96,11 +112,11 @@ for (const required of [
   if (!existsSync(required)) throw new Error(`Missing Tauri runtime data: ${relative(repositoryRoot, required)}`);
 }
 
-for (const file of ["index.html", "js/main.js"]) {
-  const rewrittenFile = readFileSync(resolve(distRoot, file), "utf8");
+for (const filePath of runtimeFiles()) {
+  const rewrittenFile = readFileSync(filePath, "utf8");
   for (const stalePath of ["../art/", "../script/"]) {
     if (rewrittenFile.includes(stalePath)) {
-      throw new Error(`Unrewritten runtime path in dist/tauri/${file}: ${stalePath}`);
+      throw new Error(`Unrewritten runtime path in dist/tauri/${relative(distRoot, filePath)}: ${stalePath}`);
     }
   }
 }

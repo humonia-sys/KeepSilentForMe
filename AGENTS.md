@@ -2,7 +2,8 @@
 
 ## Project Structure
 
-- `web/` is the current HTML/CSS/JavaScript game runtime; `web/js/main.js` owns the state machine, drag interaction, page transitions, live chat, and audio controls.
+- `web/` is the current HTML/CSS/JavaScript game runtime. `web/js/runtime/` contains the ordered feature chunks (config/state, locale, video, audio, dialogue, memory, flow, and boot validation); `web/js/main.js` is the final `bindEvents()`/`load()` entry point.
+- `web/css/style.css` is the stable stylesheet entry point; it imports `tokens.css`, `base.css`, `components.css`, and `responsive.css` in that order.
 - `script/chapters.json` holds language-neutral rules and stable chapter/line/zone IDs. Player-facing copy lives in `script/locales/`; read `script/locales/README.md` before changing a locale.
 - `art/v4/scenes/` contains the 13 full-page scene images, `pageBindings`, generation prompts, and the scene validator. `art/v4/playable/` contains source/feedback assets and its manifest. Keep `art/bg/` because the legacy manifest and generation scripts still use it.
 - `storyboard/v4-prop-lock/` is the current visual reference set. Older art and storyboards live under `archive/` and should not be loaded by the runtime.
@@ -20,7 +21,7 @@ python3 -m http.server 8765 --directory .
 Run focused checks before submitting changes:
 
 ```bash
-node --check web/js/main.js
+npm run validate:runtime-js
 node --check scripts/prepare-tauri.mjs
 node scripts/validate-chapters.mjs
 npm run validate:locales

@@ -64,7 +64,7 @@ jobs:
 
       - name: Validate source assets
         run: |
-          node --check web/js/main.js
+          npm run validate:runtime-js
           node scripts/validate-chapters.mjs
           node scripts/validate-locales.mjs
           node scripts/validate-audio.mjs

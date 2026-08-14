@@ -10,6 +10,7 @@
     "tauri:build": "tauri build",
     "validate:chapters": "node scripts/validate-chapters.mjs",
     "validate:locales": "node scripts/validate-locales.mjs",
+    "validate:runtime-js": "node scripts/validate-runtime-js.mjs",
     "validate:video-prompts": "node scripts/validate-video-prompts.mjs",
     "validate:kling-prompts": "node scripts/validate-kling-prompts.mjs",
     "validate:runtime-videos": "node scripts/validate-runtime-videos.mjs"

@@ -1,0 +1,87 @@
+/* Motion primitives and viewport-specific layout adjustments. */
+@media (prefers-reduced-motion: reduce) {
+  .title-screen,
+  .title-secondary,
+  .text-button { transition: none; }
+  .live-chat-track.is-scrolling,
+  .live-chat-dot { animation: none; }
+}
+
+@keyframes page-turn {
+  0% { opacity: 1; transform: scale(1.05) translate3d(3vw, 0, 0); filter: saturate(0.5) contrast(1.08); }
+  55% { opacity: 1; transform: scale(1.03) translate3d(-0.3vw, 0, 0); }
+  100% { opacity: 1; transform: scale(1.025) translate3d(0, 0, 0); filter: saturate(0.78) contrast(1.04); }
+}
+@keyframes live-scroll { from { transform: translate3d(0, 0, 0); } to { transform: translate3d(0, -50%, 0); } }
+@keyframes live-pulse { 0%, 100% { opacity: 0.55; transform: scale(0.88); } 50% { opacity: 1; transform: scale(1.08); } }
+@keyframes grain-shift { 0% { transform: translate3d(0, 0, 0); } 25% { transform: translate3d(-1%, 1%, 0); } 50% { transform: translate3d(1%, -1%, 0); } 75% { transform: translate3d(1%, 1%, 0); } 100% { transform: translate3d(0, 0, 0); } }
+@keyframes fx-enter { from { opacity: 0; transform: translate3d(0, 12px, 0) scale(0.96); } to { opacity: 0.92; transform: translate3d(0, 0, 0) scale(1); } }
+@keyframes fx-leave { from { opacity: 0.92; } to { opacity: 0; } }
+
+@media (max-width: 900px) {
+  .title-screen { padding: 34px 24px 116px; }
+  .title-content { max-width: min(480px, 100%); }
+  .title-content h1 { font-size: clamp(38px, 9vw, 58px); }
+  .topbar { grid-template-columns: 1fr auto; min-height: 62px; padding: 14px 18px 12px; }
+  .chapter-readout { grid-column: 1 / -1; grid-row: 2; justify-content: flex-start; min-height: 20px; padding-top: 2px; font-size: 10px; }
+  .topbar-actions { grid-column: 2; grid-row: 1; }
+  .language-menu-button { min-width: 78px; font-size: 10px; }
+  .audio-settings { top: 74px; right: 18px; width: min(340px, calc(100vw - 36px)); }
+  .scene-status { top: 110px; left: 18px; width: min(260px, 58vw); }
+  .live-chat { top: 110px; right: 18px; width: min(380px, 48vw); }
+  .live-chat-viewport { height: min(340px, calc(100dvh - 360px)); min-height: 112px; }
+  .dialogue-content { width: calc(100% - 36px); padding-top: 26px; }
+  .memory-echo { max-width: 100%; margin-top: 9px; padding-left: 9px; font-size: 11px; }
+  .dialogue-text { font-size: clamp(18px, 4.6vw, 25px); line-height: 1.75; }
+  .dialogue-frame { min-height: clamp(226px, 31vh, 246px); }
+  .black-bar { width: min(60vw, 340px); }
+  .toast { right: 18px; bottom: 264px; }
+}
+
+@media (max-width: 520px) {
+  .title-screen { align-items: end; padding: 28px 20px 104px; background: rgba(5, 7, 7, 0.28); }
+  .title-content h1 { font-size: clamp(34px, 11vw, 48px); letter-spacing: 0.1em; }
+  .title-english { margin-top: 13px; font-size: 10px; letter-spacing: 0.2em; }
+  .title-tagline { margin: 18px 0 24px; font-size: 12px; }
+  .title-actions { gap: 16px; }
+  .title-language { margin-top: 17px; }
+  .title-language select { width: min(192px, 100%); }
+  .wordmark-name { display: none; }
+  .language-menu-button { min-width: 64px; max-width: 76px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .language-menu { min-width: 156px; }
+  .audio-settings { top: 70px; right: 14px; width: calc(100vw - 28px); padding: 16px 15px 14px; }
+  .scene-status { top: 102px; }
+  .live-chat { top: 116px; right: 14px; width: min(280px, 72vw); }
+  .live-chat-viewport { height: clamp(112px, 24dvh, 154px); min-height: 112px; }
+  .live-chat-track { gap: 10px; padding: 18px 0 22px 13px; }
+  .live-chat-item { font-size: 13px; }
+  .status-copy { font-size: 12px; }
+  .dialogue-content { width: calc(100% - 28px); }
+  .memory-overlay { padding: 14px; }
+  .memory-panel { max-height: calc(100dvh - 28px); padding: 23px 18px 20px; }
+  .memory-panel h1 { font-size: clamp(22px, 7vw, 32px); }
+  .memory-copy { margin: 12px 0 20px; font-size: 12px; }
+  .memory-pool,
+  .memory-lane { min-height: 64px; padding: 9px; gap: 7px; }
+  .memory-lane { min-height: 80px; }
+  .memory-fragment { padding: 7px 9px; font-size: 12px; }
+  .dialogue-frame { min-height: clamp(218px, 39dvh, 246px); }
+  .dialogue-text { font-size: 18px; letter-spacing: 0.025em; }
+  .dialogue-footer { font-size: 10px; }
+  .story-video-skip { top: 16px; right: 14px; }
+  .story-video-caption { right: 18px; bottom: 32px; left: 18px; font-size: 13px; letter-spacing: 0.08em; }
+}
+
+@media (max-width: 520px) and (max-height: 460px) {
+  .live-chat { top: max(90px, min(160px, calc(100dvh - 300px))); }
+  .live-chat-viewport { height: 72px; min-height: 72px; }
+  .dialogue-frame,
+  .dialogue-content { min-height: clamp(190px, 44dvh, 218px); }
+}
+
+@media (max-width: 520px) and (max-height: 380px) {
+  .live-chat { top: 56px; }
+  .live-chat-viewport { height: 56px; min-height: 56px; }
+  .dialogue-frame,
+  .dialogue-content { min-height: 180px; }
+}
