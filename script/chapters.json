@@ -61,7 +61,7 @@
       "id": "L1",
       "scene": "meeting_room",
       "creature": "stage1",
-      "goal": "pass>=4 && fail<2",
+      "goal": "pass>=3 && fail<2",
       "lines": [
         {
           "id": "L1_S01",
