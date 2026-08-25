@@ -119,6 +119,11 @@ for (const [localeId, , , relativePath] of expectedLocales) {
       errors.push(`${prefix} is missing ending copy for ${endingId}`);
     }
   }
+  if (pack.game?.persona !== undefined) {
+    for (const key of ["mask", "truth", "bond", "control"]) {
+      if (!isNonEmptyString(pack.game.persona?.[key])) errors.push(`${prefix} game.persona.${key} is invalid`);
+    }
+  }
   if (!Array.isArray(pack.game?.revealCaptions) || pack.game.revealCaptions.length !== 5
     || pack.game.revealCaptions.some((caption) => !isNonEmptyString(caption))) {
     errors.push(`${prefix} revealCaptions must contain five strings`);

@@ -5,7 +5,8 @@ function chapterResult(chapter) {
   if (chapter.id === "L1") {
     const pass = state.flags.pass ?? 0;
     const fail = state.flags.fail ?? 0;
-    return pass >= 3 && fail < 2 ? "pass" : "fail";
+    const risk = state.flags.risk ?? 0;
+    return pass >= 3 && fail < 2 && risk < 3 ? "pass" : "fail";
   }
   if (chapter.id === "L2") {
     const hateLeak = state.flags.hate_leak ?? 0;
@@ -30,20 +31,39 @@ function chapterL4Mixed() {
   return perform >= 1 && refuse >= 1;
 }
 
-// 台本第三章结算变体：L3 无胜负，章末覆盖层文案按关系旗标回显一次。
-function l3RelationshipCopy(overlay) {
+// 台本章末覆盖层变体：L3 按关系旗标、L4 按 revolt 回显一次。
+function relationshipCopy(chapterId, overlay) {
   const variants = overlay?.variants ?? null;
   if (!variants) return overlay?.copy ?? t("ui.nextChapterCopy");
-  const trust = Number(state.flags.trust) || 0;
-  const distance = Number(state.flags.distance) || 0;
-  const secretRisk = Number(state.flags.secret_risk) || 0;
-  const crack = Number(state.flags.crack) || 0;
   let key = "";
-  if (secretRisk >= 2) key = "risk";
-  else if (trust < 0) key = "distrust";
-  else if (distance >= 2) key = "distance";
-  else if (crack >= 5) key = "crack";
+  if (chapterId === "L3") {
+    const trust = Number(state.flags.trust) || 0;
+    const distance = Number(state.flags.distance) || 0;
+    const secretRisk = Number(state.flags.secret_risk) || 0;
+    const crack = Number(state.flags.crack) || 0;
+    if (secretRisk >= 2) key = "risk";
+    else if (trust < 0) key = "distrust";
+    else if (distance >= 2) key = "distance";
+    else if (crack >= 5) key = "crack";
+  } else if (chapterId === "L4") {
+    if ((Number(state.flags.revolt) || 0) >= 1) key = "revolt";
+  }
   return variants[key]?.copy || overlay?.copy || t("ui.nextChapterCopy");
+}
+
+// 台本 L5「人格回显」：结局覆盖层按 mask/truth/bond/control 最高者（≥6）追加一行。
+function personaLine() {
+  const order = ["mask", "truth", "bond", "control"];
+  let best = "";
+  let bestValue = 0;
+  for (const key of order) {
+    const value = Number(state.flags[key]) || 0;
+    if (value >= 6 && value > bestValue) {
+      bestValue = value;
+      best = key;
+    }
+  }
+  return best ? localeValue(`game.persona.${best}`, "") : "";
 }
 
 function finishChapter() {
@@ -85,8 +105,8 @@ function finishChapter() {
   if (state.chapterIndex >= state.chapters.length - 1) return;
   const chapterOverlay = localeValue(`game.chapterOverlays.${chapter.id}`, null);
   const title = chapterOverlay?.title ?? t("ui.nextChapter");
-  const copy = chapter.id === "L3"
-    ? l3RelationshipCopy(chapterOverlay)
+  const copy = (chapter.id === "L3" || chapter.id === "L4")
+    ? relationshipCopy(chapter.id, chapterOverlay)
     : (chapterOverlay?.copy ?? t("ui.nextChapterCopy"));
   const action = MEMORY_CHAPTER_IDS.has(chapter.id)
     ? () => openMemoryOverlay(chapter)
@@ -187,7 +207,8 @@ async function finishEnding(endingId, expectedTransitionVersion = null, { playSe
   state.locked = true;
   syncLanguageControls();
   const endingTitle = localeValue(`game.endingTitles.${endingId}`, t("ui.endingFallbackTitle"));
-  const endingCopy = state.data.endings?.[endingId] ?? "";
+  const persona = personaLine();
+  const endingCopy = [state.data.endings?.[endingId] ?? "", persona].filter(Boolean).join(" ");
   showOverlay(
     t("ui.endingEyebrow", { endingId }),
     endingTitle,

@@ -1002,7 +1002,7 @@ function snapToZone(bar, targetRect, callback) {
 
 ### 11.8 各章结算（抄这张表写 if）
 
-> **实现状态说明**：当前代码对 L1 执行 `pass >= 3 && fail < 2`、对 L2 执行 `hate_leak < 2`，
+> **实现状态说明**：当前代码对 L1 执行 `pass >= 3 && fail < 2 && risk < 3`、对 L2 执行 `hate_leak < 2`，
 > 失败均显示重试层；L3 只记录旗标；L4 按 `apology_perform >= apology_refuse` 选表演/硬刚
 > 过场（混线取较高，平票取表演；混线先播 1s 噪声近似）；L5 主判定 L5_S06 的 `ending`，L5_S03 的 `ending_seed`（A/B）
 > 微调 A/B 两结局（C/C' 不受影响）。
@@ -1010,7 +1010,7 @@ function snapToZone(bar, targetRect, callback) {
 | 章 | 通过/走向 | 条件（读 flags） | 视频 |
 | --- | --- | --- | --- |
 | L0 | 必过 | 任意选完 L0_S01 | `V0_out` |
-| L1 | 录取 | `pass>=3 && fail<2` | `V1_pass` |
+| L1 | 录取 | `pass>=3 && fail<2 && risk<3` | `V1_pass` |
 | L1 | 重来 | 否则 | `V1_fail` 或直接 `lineIndex=0` |
 | L2 | 下播 | `hate_leak<2` | `V2_out` |
 | L2 | 事故重来 | 否则 | 提示后重开章 |

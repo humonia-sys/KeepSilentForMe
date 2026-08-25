@@ -192,15 +192,18 @@ From art-style.md:
 ### Flag System
 
 Flags are counters tracked in `gameState.flags`:
-- `pass`/`fail` - L1 settlement (need `pass >= 3 && fail < 2`; otherwise the chapter retry overlay appears)
+- `pass`/`fail`/`risk` - L1 settlement (need `pass >= 3 && fail < 2 && risk < 3`; otherwise the chapter retry overlay appears)
 - `hate_leak` - L2 settlement (`hate_leak < 2` passes; otherwise the live-accident retry overlay appears)
 - `apology_perform`/`apology_refuse` - L4 route: the higher count selects the perform/refuse chapter outro (tie → perform)
-- `mask`, `truth`, `bond`, `crack`, `control`, `trust`, `distance`, `secret_risk` - Recorded for narrative/debug use, not currently consumed by chapter progression
+- `trust`/`distance`/`secret_risk`/`crack` - L3 chapter-end overlay variants (priority risk > distrust > distance > crack)
+- `revolt` - L4 overlay variant: `revolt >= 1` rewrites the settlement copy ("not by you" beat)
+- `mask`/`truth`/`bond`/`control` - ending overlay persona line (highest with `>= 6`, ties in this order)
 
 The four ending IDs are selected by the zones on `L5_S06`, with the `ending_seed`
 captured on `L5_S03` nudging A/B (seed `A` + `B_alienate` → `A_separate`; seed `B`
 + `A_separate` → `B_alienate`; C endings are unaffected). `C_consume` and `C_cold`
 have separate logical IDs but share `PAGE_END_C_hollow` and the `V5_C` video sequence.
+The ending overlay appends one persona line per the flag table above.
 Known rule and narrative mismatches are tracked in `issue.md`.
 
 ## Key Documents Quick Reference

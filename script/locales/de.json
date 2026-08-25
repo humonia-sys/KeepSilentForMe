@@ -26,7 +26,7 @@
           "(Sie, leise) ... Es geht los.",
           "(Interviewer B) Seien Sie nicht nervös. Sagen Sie einfach, was Ihnen einfällt. -- Genau das ist am gefährlichsten."
         ],
-        "objective": "pass>=3 und fail<2: Zusage. Sonst kann die Szene wiederholt werden.",
+        "objective": "pass>=3 und fail<2 und risk<3: Zusage. Sonst kann die Szene wiederholt werden.",
         "settlement": [
           "(Interviewer A) Kommen Sie morgen zur Probe.",
           "(Sie) Danke. ... Ein paar dieser Sätze hätten alles ruiniert, wären sie herausgekommen."
@@ -1273,7 +1273,10 @@
       },
       "L4": {
         "title": "Die Entschuldigung ist vorbei",
-        "copy": "Gerade eben hat jemand eine Zeile gezogen, die nicht sie gezogen hat."
+        "copy": "Gerade eben hat jemand eine Zeile gezogen, die nicht sie gezogen hat.",
+        "variants": {
+          "revolt": { "copy": "Gerade eben wurde eine Zeile nicht von ihr gezogen – und auch nicht von dir." }
+        }
       }
     },
     "endingTitles": {
@@ -1281,6 +1284,12 @@
       "B_alienate": "Was bleibt, ist kein „Ich“",
       "C_consume": "Bitte: eine leere Hülle",
       "C_cold": "Die Identität ist ausgelöscht"
+    },
+    "persona": {
+      "mask": "Bis zum Schluss trug sie diesen Ausdruck.",
+      "truth": "Ganz am Ende ließ sie endlich einen wahren Satz zurück.",
+      "bond": "Sie behielt dich in ihren allerletzten Worten.",
+      "control": "Bevor sie sprach, warf sie einen Blick in deine Richtung."
     },
     "revealCaptions": [
       "Du dachtest, du würdest die ganze Zeit löschen.",

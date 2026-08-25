@@ -43,6 +43,7 @@
 - ✅ 结局文案对齐台本台词叠字：A 结局显示「她：……这次我说完了。她取回语言。」，C 改为「请求还在，人不必在。」，C' 补「只剩条与字灰」（四语言）
 - ✅ L3 关系旗标有回声：章末覆盖层文案按 `secret_risk`/`trust`/`distance`/`crack` 分支（台本结算变体表，四语言）
 - ✅ 未落地台词收尾：L3 旁白「有些门开了，话却关得更死。」、L1 失败「还可以再试一次。」、L5 秘密回声（`secret_risk≥2` 时「那句『有别人』，也跟到了这里。」）全部落地
+- ✅ 全部旗标生效：`risk≥3` 计入 L1 失败；`revolt≥1` 改写 L4 章末文案；`mask/truth/bond/control` 结局覆盖层人格回显（台本新增规则，四语言）
 - ✅ `chapters.json` 数据解耦：纯视觉注释字段（rules/creature/bg/demo/face/演出等）移出，仅保留规则与稳定 ID，注释由 `台本.md` 独有
 - 🟡 外部 SFX/配音仍未接入；反噬自动遮挡与真噪声插片属媒体层待办（L4 混线 1s 噪声已用运行时近似）
 - 🟡 L3 关系旗标（trust/distance/secret_risk/crack）按设计只记录、不进分支
@@ -432,7 +433,7 @@ graph LR
 
 ### 当前原型的流程边界
 
-- **L1**：读取 `pass/fail`（`pass>=3 && fail<2`），未达到条件时显示面试重试层。
+- **L1**：读取 `pass/fail/risk`（`pass>=3 && fail<2 && risk<3`），未达到条件时显示面试重试层。
 - **L2**：读取 `hate_leak`（`<2` 下播），否则显示直播事故重试层并重开本章。
 - **L3**：只记录 `trust`/`distance`/`secret_risk`/`crack`，无胜负分支（设计如此）。
 - **L4**：按 `apology_perform`/`apology_refuse` 取较高走表演/硬刚过场，平票取表演；无失败重开。

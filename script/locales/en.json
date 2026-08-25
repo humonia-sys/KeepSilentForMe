@@ -26,7 +26,7 @@
           "(Her, quietly) ...It has started.",
           "(Interviewer B) Relax. Say whatever comes to mind. -- The most dangerous sentence."
         ],
-        "objective": "pass >= 3 and fail < 2: hired. Otherwise, try again.",
+        "objective": "pass >= 3 and fail < 2 and risk < 3: hired. Otherwise, try again.",
         "settlement": [
           "(Interviewer A) Come in tomorrow for the trial.",
           "(Her) Thank you. ... A few of those sentences would have ruined everything if they had gotten out."
@@ -1273,7 +1273,10 @@
       },
       "L4": {
         "title": "Apology Over",
-        "copy": "Just now, one of those lines was not dragged by her."
+        "copy": "Just now, one of those lines was not dragged by her.",
+        "variants": {
+          "revolt": { "copy": "Just now, one of those lines was not dragged by her — and not by you." }
+        }
       }
     },
     "endingTitles": {
@@ -1281,6 +1284,12 @@
       "B_alienate": "What remains is not 'me'",
       "C_consume": "A hollow request",
       "C_cold": "The identity is erased"
+    },
+    "persona": {
+      "mask": "To the very end, she kept that expression on.",
+      "truth": "At the very end, she finally left one true sentence behind.",
+      "bond": "She kept you inside her very last words.",
+      "control": "Before she spoke, she would glance your way."
     },
     "revealCaptions": [
       "You thought you had been deleting things.",

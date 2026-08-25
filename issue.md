@@ -215,7 +215,7 @@ const AUDIO_MANIFEST_URL = "audio/manifest.json?v=audio-3";  // ← 不一致
 
 ## 🟡 P1 高优先级问题
 
-### B-01 · [需设计决策] 跨章 flag 大量只增不读
+### B-01 · [已解决] 跨章 flag 大量只增不读
 
 | flag | 出现章 | 是否进入任何结算/结局 |
 | --- | --- | --- |
@@ -229,9 +229,11 @@ const AUDIO_MANIFEST_URL = "audio/manifest.json?v=audio-3";  // ← 不一致
 
 **建议：** 要么在 L5/V_RV 消费这些计数（改可选 zone、字幕、Stage 演出），要么在总则标明「竖切仅记录 / 不影响分支」，避免设计与实现双重预期。
 
+**处理（2026-08-25）**：全部旗标已有消费方——`mask`/`truth`/`bond`/`control` 进结局覆盖层人格回显（≥6 取最高，平票按 mask>truth>bond>control）；`revolt` 进 L4 章末变体；`risk` 进 L1 软失败（≥3）；`trust`/`distance`/`secret_risk`/`crack` 进 L3 章末变体（B-04）。
+
 ---
 
-### B-02 · [部分处理] 第一章 `pass≥4 且 fail<2` 偏紧，且 `risk` 语义含混
+### B-02 · [已解决] 第一章 `pass≥4 且 fail<2` 偏紧，且 `risk` 语义含混
 
 - 7 句各选 1 zone；`pass+` 分布尚可，但随机全选通过率约 **12%**。
 - 多句「正解」只有 1 个 `pass+`，其余为 `fail+` 或 `risk+`。
@@ -240,7 +242,7 @@ const AUDIO_MANIFEST_URL = "audio/manifest.json?v=audio-3";  // ← 不一致
 
 **建议：** 明确 risk 是否计软失败、失败时 flag 是否清零；若面向 Jam 受众，可略降到 `pass≥3` 或增加每句 pass 供给。
 
-**处理（2026-08-25）**：门槛部分已按提交 `cba3b51` 的设计意图落为 `pass>=3 && fail<2`（代码/数据/台本/四语言 objective 同步）；`risk` 是否计软失败仍未定，维持「仅记录」。
+**处理（2026-08-25）**：门槛部分已按提交 `cba3b51` 的设计意图落为 `pass>=3 && fail<2`（代码/数据/台本/四语言 objective 同步）；`risk≥3` 计软失败已落地（L1 结算改为 `pass>=3 && fail<2 && risk<3`），失败沿用重试层。
 
 ---
 
@@ -366,7 +368,7 @@ JSON：仅 `special: parasite_auto_cover` / `prelock_optional`，**无一 zone �
 
 ---
 
-### C-06 · [需设计决策] `risk+` 旗标用途不明确
+### C-06 · [已处理] `risk+` 旗标用途不明确
 
 **统计**：39 个 zone 使用 `risk+`，是所有旗标中最多的
 
@@ -382,6 +384,8 @@ JSON：仅 `special: parasite_auto_cover` / `prelock_optional`，**无一 zone �
 1. 明确定义 `risk` 在结算中的作用（如 L1: `risk >= 3` 算软失败）
 2. 或将 `risk` 改为纯叙事标签，不参与逻辑判断
 3. 在文档中说明当前 `risk` 仅用于记录
+
+**处理（2026-08-25）**：`risk` 语义已定义——L1 结算计入软失败（`risk≥3` 则重试，台本结算表已更新），全章保留选 zone 时的 reject 即时反馈。
 
 ---
 
@@ -785,7 +789,8 @@ manifest 验证。
 - **过场层（narration）落地**：章首按 `narration` 逐条自动播放（时长按字数，1.8s–3.6s），期间黑条隐藏并锁定，结束渲染首句；重启/重开会取消并重置。L0 教学、L5「只剩你了」等台本过场自此可见。
 - **关末结算台词落地**：L1-L4 章末先播 `settlement`（台本「关末不可遮」她的台词，四语言 locale 新增字段；L1 含面试官「明天来试用」），再弹覆盖层；`chapters.json` 的 `结算台词` 字段移除，避免双语双源。
 - **L1 失败侧结算台词落地**：`settlementFail`（四语言）——L1 失败先播「（面试官A）我们再联系。」，再进 `L1_fail_retry` 过场与重试层；`validate-locales` 增加 `settlementFail` 校验。
-- **仍未处理**：A-04、B-01、B-02（risk 语义部分）、B-05、C-02、C-03、C-06；反噬自动遮挡与真噪声插片属媒体层待办。
+- **旗标全量消费（B-01/B-02/C-06）**：`risk≥3` 计入 L1 失败；`revolt≥1` 改写 L4 章末文案；`mask`/`truth`/`bond`/`control` 结局覆盖层人格回显（≥6 取最高，台本新增「人格回显」表，四语言 `game.persona`）。
+- **仍未处理**：A-04、B-05、C-02、C-03；反噬自动遮挡与真噪声插片属媒体层待办。
 
 ### 2026-08-25 未追踪缺口登记
 

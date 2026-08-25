@@ -49,7 +49,7 @@
     {
       "id": "L1",
       "scene": "meeting_room",
-      "goal": "pass>=3 && fail<2",
+      "goal": "pass>=3 && fail<2 && risk<3",
       "lines": [
         {
           "id": "L1_S01",
@@ -262,8 +262,8 @@
       "outro": "谢谢你。……刚才有几句话，要是说出去就完了。",
       "outro_video": "V1_pass",
       "结算": {
-        "录取": "pass≥3且fail<2 → 播V1_pass",
-        "重来": "其他 → 播V1_fail 2秒或直接重开"
+        "录取": "pass≥3且fail<2且risk<3 → 播V1_pass",
+        "重来": "其他（含risk≥3）→ 播V1_fail 2秒或直接重开"
       },
       "video_detail": {
         "V1_pass": {
