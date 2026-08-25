@@ -94,7 +94,7 @@ function setBarSource(mode) {
   dom.blackBar.classList.toggle("bar-cracked", mode === "cracked");
 }
 
-function startNarration(lines, index = 0, version = state.transitionVersion) {
+function startNarration(lines, onDone = null, index = 0, version = state.transitionVersion) {
   const line = lines[index];
   state.locked = true;
   syncLanguageControls();
@@ -114,14 +114,15 @@ function startNarration(lines, index = 0, version = state.transitionVersion) {
   scheduleTransition(() => {
     if (version !== state.transitionVersion) return;
     if (index + 1 < lines.length) {
-      startNarration(lines, index + 1, version);
+      startNarration(lines, onDone, index + 1, version);
       return;
     }
     dom.blackBar.classList.remove("is-hidden");
     dom.dialogueFrame.classList.remove("is-narrating");
     state.locked = false;
     syncLanguageControls();
-    renderLine();
+    if (onDone) onDone();
+    else renderLine();
   }, duration);
 }
 

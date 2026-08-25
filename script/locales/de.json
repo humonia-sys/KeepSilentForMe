@@ -26,7 +26,11 @@
           "(Sie, leise) ... Es geht los.",
           "(Interviewer B) Seien Sie nicht nervös. Sagen Sie einfach, was Ihnen einfällt. -- Genau das ist am gefährlichsten."
         ],
-        "objective": "pass>=3 und fail<2: Zusage. Sonst kann die Szene wiederholt werden."
+        "objective": "pass>=3 und fail<2: Zusage. Sonst kann die Szene wiederholt werden.",
+        "settlement": [
+          "(Interviewer A) Kommen Sie morgen zur Probe.",
+          "(Sie) Danke. ... Ein paar dieser Sätze hätten alles ruiniert, wären sie herausgekommen."
+        ]
       },
       "L2": {
         "title": "Der erste Stream",
@@ -35,7 +39,10 @@
           "(Chat) Da ist sie / Neu hier? / Wo ist dein Gesicht?",
           "(Sie) ... Hallo zusammen."
         ],
-        "objective": "hate_leak<2 und bis zum Ende durchhalten. Sonst kann die Szene wiederholt werden."
+        "objective": "hate_leak<2 und bis zum Ende durchhalten. Sonst kann die Szene wiederholt werden.",
+        "settlement": [
+          "(Sie) Der Satz von eben, „da bist du\" ... der galt dir."
+        ]
       },
       "L3": {
         "title": "Ein Freund an der Tür",
@@ -44,7 +51,10 @@
           "(Freund) ... Ich weiß, dass du da bist. Machst du bitte auf?",
           "(Sie) ..."
         ],
-        "objective": "Kein perfekter Durchgang. Merke dir trust, distance, secret_risk und crack."
+        "objective": "Kein perfekter Durchgang. Merke dir trust, distance, secret_risk und crack.",
+        "settlement": [
+          "(Sie) ... Du hast alles gehört. Verurteile mich nicht."
+        ]
       },
       "L4": {
         "title": "Der Entschuldigungsstream",
@@ -53,7 +63,10 @@
           "(System) Ungewöhnliche Reichweite. Keine Zahlen, nur Rauschen.",
           "(Sie) ... Gut."
         ],
-        "objective": "apology_perform>=1 oder apology_refuse>=1 führt jeweils zu einem Abschluss."
+        "objective": "apology_perform>=1 oder apology_refuse>=1 führt jeweils zu einem Abschluss.",
+        "settlement": [
+          "(Sie) ... Eben war einer dabei, den ich nicht gezogen habe."
+        ]
       },
       "L5": {
         "title": "Ein Zimmer ohne Publikum",

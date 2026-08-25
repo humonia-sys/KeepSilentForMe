@@ -26,7 +26,11 @@
           "（她·小声）……开始了。",
           "（面试官B）别紧张，想到什么说什么。——正是最危险的一句。"
         ],
-        "objective": "pass≥3且fail<2→录取；否则可重来"
+        "objective": "pass≥3且fail<2→录取；否则可重来",
+        "settlement": [
+          "（面试官A）明天来试用。",
+          "她：谢谢你。……刚才有几句话，要是说出去就完了。"
+        ]
       },
       "L2": {
         "title": "第一次直播",
@@ -35,7 +39,10 @@
           "（弹幕）来了来了 / 新人？ / 脸呢",
           "（她）……大家好。"
         ],
-        "objective": "hate_leak<2且撑完；否则事故可重来"
+        "objective": "hate_leak<2且撑完；否则事故可重来",
+        "settlement": [
+          "她：刚才那句「有你在」……我是对你说的。"
+        ]
       },
       "L3": {
         "title": "朋友上门",
@@ -44,7 +51,10 @@
           "（朋友）……我知道你在。开一下门，好吗。",
           "（她）……"
         ],
-        "objective": "无完美通关；记trust/distance/secret_risk/crack"
+        "objective": "无完美通关；记trust/distance/secret_risk/crack",
+        "settlement": [
+          "她：……你都听见了。别评价我。"
+        ]
       },
       "L4": {
         "title": "道歉直播",
@@ -53,7 +63,10 @@
           "（系统）热度异常·不显示数字，只听噪音",
           "（她）……好。"
         ],
-        "objective": "apology_perform≥1或apology_refuse≥1皆可收束"
+        "objective": "apology_perform≥1或apology_refuse≥1皆可收束",
+        "settlement": [
+          "她：……刚才有一条，不是我拖的。"
+        ]
       },
       "L5": {
         "title": "没有观众的房间",

@@ -26,7 +26,11 @@
           "(Her, quietly) ...It has started.",
           "(Interviewer B) Relax. Say whatever comes to mind. -- The most dangerous sentence."
         ],
-        "objective": "pass >= 3 and fail < 2: hired. Otherwise, try again."
+        "objective": "pass >= 3 and fail < 2: hired. Otherwise, try again.",
+        "settlement": [
+          "(Interviewer A) Come in tomorrow for the trial.",
+          "(Her) Thank you. ... A few of those sentences would have ruined everything if they had gotten out."
+        ]
       },
       "L2": {
         "title": "First Stream",
@@ -35,7 +39,10 @@
           "(Chat) She is here / New streamer? / Show your face",
           "(Her) ...Hello, everyone."
         ],
-        "objective": "Keep hate_leak below 2 and make it to the end; failures can be retried."
+        "objective": "Keep hate_leak below 2 and make it to the end; failures can be retried.",
+        "settlement": [
+          "(Her) That line just now, \"there's you\" ... I was saying it to you."
+        ]
       },
       "L3": {
         "title": "A Friend at the Door",
@@ -44,7 +51,10 @@
           "(Friend) ...I know you are in there. Could you open the door?",
           "(Her) ..."
         ],
-        "objective": "There is no perfect route. Track trust, distance, secret risk, and cracks."
+        "objective": "There is no perfect route. Track trust, distance, secret risk, and cracks.",
+        "settlement": [
+          "(Her) ... You heard everything. Don't judge me."
+        ]
       },
       "L4": {
         "title": "Apology Stream",
@@ -53,7 +63,10 @@
           "(System) Abnormal traffic. No numbers, only noise.",
           "(Her) ...All right."
         ],
-        "objective": "Either apology_perform >= 1 or apology_refuse >= 1 can close this chapter."
+        "objective": "Either apology_perform >= 1 or apology_refuse >= 1 can close this chapter.",
+        "settlement": [
+          "(Her) ... Just now, there was one I didn't drag."
+        ]
       },
       "L5": {
         "title": "A Room Without Viewers",

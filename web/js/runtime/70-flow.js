@@ -62,7 +62,13 @@ function finishChapter() {
   const action = MEMORY_CHAPTER_IDS.has(chapter.id)
     ? () => openMemoryOverlay(chapter)
     : () => void playChapterOutroThenAdvance(chapter);
-  showOverlay(t("ui.chapterEnded"), title, copy, action);
+  const settlement = Array.isArray(chapter.settlement) ? chapter.settlement : [];
+  if (settlement.length) {
+    // 台本「关末不可遮」：先播她的结算台词，再弹章节覆盖层。
+    startNarration(settlement, () => showOverlay(t("ui.chapterEnded"), title, copy, action));
+  } else {
+    showOverlay(t("ui.chapterEnded"), title, copy, action);
+  }
 }
 
 function nextChapter() {
