@@ -321,12 +321,14 @@ JSON：仅 `special: parasite_auto_cover` / `prelock_optional`，**无一 zone �
 
 ---
 
-### C-04 · [需文案决策] 反转文案与操作直觉的张力（非硬 bug）
+### C-04 · [已处理] 反转文案与操作直觉的张力（非硬 bug）
 
 玩法：遮住 = 不出口 / 喂给体；留下 = 对外说。  
 `V_RV`：「**被遮住的，是她说出口的**」「屏幕上留下的，是给外界的字幕」。
 
 需在反转里用一层 UI 把「对你说出口 / 对外字幕」说死，否则与 L0 教学「被遮住的会成为你」并读时会像两套物理。
+
+**处理（2026-08-25）**：反转第 2/3 句改为谜语式表述（四语言、台本分镜、`chapters.json` reveal 同步）——「被你吃掉的，才是她想说的。」「留下来的，是念给别人听的。」，与 L0「遮住 = 吃掉」共用同一物理，不另加解释层。
 
 ---
 
@@ -772,4 +774,5 @@ manifest 验证。
 - **L1/L4 门槛（B-02 / 提交 cba3b51）**：按提交 `cba3b51`「for better player flow」的设计意图统一为 L1 `pass>=3 && fail<2`、L4 `apology_perform>=1 || apology_refuse>=1`——代码、`chapters.json`、`台本.md` 与四语言 objective 全部同步；L4 运行时仍为「取较高、平票取表演」。
 - **已验证**：`node --check` 全部运行时文件、`validate-chapters`、`validate-locales` 通过。
 - **B-06（C/C' 视频映射）**：已文档化——`C_consume` 与 `C_cold` 共用 K19/K20（`V5_C`）与 `PAGE_END_C_hollow` 是显式设计，差异仅在结局标题/文案；已写入视频 manifest note、`schedule.md` 映射表，`validate-runtime-videos.mjs` 亦显式声明。
-- **仍未处理**：A-04、B-01、B-02（risk 语义部分）、B-04、B-05、C-02 至 C-04、C-06；L4 混线 1s 噪声与反噬自动遮挡属媒体层待办。
+- **C-04（反转文案）**：已处理——第 2/3 句改为谜语式「被你吃掉的，才是她想说的。/ 留下来的，是念给别人听的。」（四语言、台本分镜、`chapters.json` 同步）。
+- **仍未处理**：A-04、B-01、B-02（risk 语义部分）、B-04、B-05、C-02、C-06；L4 混线 1s 噪声与反噬自动遮挡属媒体层待办。
