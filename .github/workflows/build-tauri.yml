@@ -94,22 +94,16 @@ jobs:
           uploadUpdaterJson: false
           uploadUpdaterSignatures: false
 
-      - name: Package portable zip (Windows)
+      - name: Stage portable files (Windows)
         if: matrix.platform == 'windows'
         shell: pwsh
         run: |
           $release = "src-tauri\target\release"
           $exe = Get-ChildItem $release -Filter *.exe -File | Select-Object -First 1
           if (-not $exe) { throw "release exe 未找到: $release" }
-          Push-Location $release
-          try {
-            $files = @($exe.Name)
-            if (Test-Path "WebView2Loader.dll") { $files += "WebView2Loader.dll" }
-            $zip = Join-Path $env:GITHUB_WORKSPACE "keep-silent-for-me-windows-x64-portable.zip"
-            Compress-Archive -Path $files -DestinationPath $zip -CompressionLevel Optimal
-            Write-Host "便携包: $zip ($($files -join ', '))"
-          } finally {
-            Pop-Location
+          Copy-Item $exe.FullName (Join-Path $env:GITHUB_WORKSPACE $exe.Name)
+          Get-ChildItem $release -Filter WebView2Loader.dll -File | ForEach-Object {
+            Copy-Item $_.FullName (Join-Path $env:GITHUB_WORKSPACE $_.Name)
           }
 
       - name: Upload portable zip (Windows)
@@ -117,5 +111,9 @@ jobs:
         uses: actions/upload-artifact@v7
         with:
           name: keep-silent-for-me-windows-x64-portable
-          path: keep-silent-for-me-windows-x64-portable.zip
-          if-no-files-found: error
+          # 只传 exe（+可选 WebView2Loader.dll），artifact 下载即为 zip，文件平铺在根，
+          # 避免「zip 里套 zip」的嵌套。
+          path: |
+            keep-silent-for-me*.exe
+            WebView2Loader.dll
+          if-no-files-found: warn

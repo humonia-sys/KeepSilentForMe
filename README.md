@@ -322,8 +322,8 @@ GitHub Pages 工作流位于
 首版不启用签名和自动更新。
 Windows CI 当前生成 NSIS 安装包；NSIS 不依赖 hosted runner 上易失的 WiX/MSI 工具链，
 需要 MSI 时可在具备 WiX 的 Windows 环境中单独运行 `tauri build --bundles msi`。
-Windows CI 同时把 release 主程序压成便携 zip（解压即玩，需系统已装 WebView2 Runtime，
-Win10/11 默认自带）。
+Windows CI 同时产出便携包 artifact（Actions 下载即 zip，解压后 exe 平铺在根目录、即玩；
+需系统已装 WebView2 Runtime，Win10/11 默认自带）。
 
 最新 Tauri 运行已通过，产物名称为：
 
