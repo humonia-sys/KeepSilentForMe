@@ -44,8 +44,9 @@
 - ✅ L3 关系旗标有回声：章末覆盖层文案按 `secret_risk`/`trust`/`distance`/`crack` 分支（台本结算变体表，四语言）
 - ✅ 未落地台词收尾：L3 旁白「有些门开了，话却关得更死。」、L1 失败「还可以再试一次。」、L5 秘密回声（`secret_risk≥2` 时「那句『有别人』，也跟到了这里。」）全部落地
 - ✅ 全部旗标生效：`risk≥3` 计入 L1 失败；`revolt≥1` 改写 L4 章末文案；`mask/truth/bond/control` 结局覆盖层人格回显（台本新增规则，四语言）
+- ✅ L4 反噬落地：L4_S02 细条自动爬入预锁并代吃「不觉得自己做错了」（eatLog 标 `source: parasite`），章末「不是我拖的」每局成真
 - ✅ `chapters.json` 数据解耦：纯视觉注释字段（rules/creature/bg/demo/face/演出等）移出，仅保留规则与稳定 ID，注释由 `台本.md` 独有
-- 🟡 外部 SFX/配音仍未接入；反噬自动遮挡与真噪声插片属媒体层待办（L4 混线 1s 噪声已用运行时近似）
+- 🟡 外部 SFX/配音仍未接入；真噪声插片属媒体层待办（L4 混线 1s 噪声已用运行时近似）
 - 🟡 L3 关系旗标（trust/distance/secret_risk/crack）按设计只记录、不进分支
 - 📝 **运行时数据分层**：`script/chapters.json` 保存规则与稳定 ID，`script/locales/*.json` 保存玩家可见文本；`台本.md` 仍是中文叙事参考源
 

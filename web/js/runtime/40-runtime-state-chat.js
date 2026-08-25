@@ -29,7 +29,12 @@ function normalizeSelections(raw) {
       && typeof entry.zoneId === "string"
       && isKnownZoneId(entry.chapterId, entry.lineId, entry.zoneId))
     .filter((entry) => !seen.has(entry.zoneId) && seen.add(entry.zoneId))
-    .map((entry) => ({ chapterId: entry.chapterId, lineId: entry.lineId, zoneId: entry.zoneId }));
+    .map((entry) => ({
+      chapterId: entry.chapterId,
+      lineId: entry.lineId,
+      zoneId: entry.zoneId,
+      source: entry.source === "parasite" ? "parasite" : "player",
+    }));
 }
 
 function normalizeMemoryByChapter(raw) {

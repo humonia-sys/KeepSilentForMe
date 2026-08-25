@@ -126,6 +126,30 @@ function startNarration(lines, onDone = null, index = 0, version = state.transit
   }, duration);
 }
 
+// 台本 L4_S02 反噬：细条从右侧爬入，预锁「不觉得自己做错了」1.5s 后由系统代吃。
+function scheduleParasiteCover(line) {
+  const version = state.transitionVersion;
+  const parasiteIndex = 0;
+  state.locked = true;
+  syncLanguageControls();
+  dom.blackBar.classList.add("bar-parasite", "bar-crawling");
+  setBarCenter(window.innerWidth + 240, window.innerHeight * BAR_REST_Y_RATIO);
+  void dom.blackBar.offsetWidth;
+  scheduleTransition(() => {
+    if (version !== state.transitionVersion) return;
+    const target = getZones().find((item) => Number(item.dataset.zoneIndex) === parasiteIndex);
+    if (target) {
+      const rect = target.getBoundingClientRect();
+      setBarCenter(rect.left + rect.width / 2, rect.top + rect.height / 2);
+    }
+  }, PARASITE_CRAWL_DELAY_MS);
+  scheduleTransition(() => {
+    if (version !== state.transitionVersion) return;
+    dom.blackBar.classList.remove("bar-crawling");
+    applySelection(parasiteIndex, version, "parasite");
+  }, PARASITE_CRAWL_DELAY_MS + PARASITE_PRELOCK_MS);
+}
+
 function renderLine() {
   const chapter = currentChapter();
   const line = currentLine();
@@ -153,7 +177,7 @@ function renderLine() {
   state.hoverTarget = null;
   state.locked = false;
   syncLanguageControls();
-  dom.blackBar.classList.remove("is-locked", "bar-active", "bar-snap", "bar-locked", "bar-cracked", "is-hidden");
+  dom.blackBar.classList.remove("is-locked", "bar-active", "bar-snap", "bar-locked", "bar-cracked", "bar-parasite", "bar-crawling", "is-hidden");
   dom.dialogueFrame.classList.remove("is-narrating");
   const cracked = manifestLayerIds("bar_cracked", line.id)?.length;
   const locked = manifestLayerIds("bar_locked", line.id)?.length;
@@ -170,7 +194,11 @@ function renderLine() {
   buildDialogue(line.raw, line.zones);
   setScene(chapter, line, true);
   clearNearestZone();
-  window.requestAnimationFrame(positionBarAtRest);
+  if (line.special === "prelock_optional") {
+    scheduleParasiteCover(line);
+  } else {
+    window.requestAnimationFrame(positionBarAtRest);
+  }
   triggerManifestEvent("zone_hint", undefined, FEEDBACK_HINT_DELAY_MS);
 }
 
@@ -327,7 +355,7 @@ function applyFlags(flags = []) {
   }
 }
 
-function applySelection(index, version = state.transitionVersion) {
+function applySelection(index, version = state.transitionVersion, source = "player") {
   if (version !== state.transitionVersion || !state.locked) return;
   const line = currentLine();
   const zone = line?.zones?.[index];
@@ -341,7 +369,7 @@ function applySelection(index, version = state.transitionVersion) {
     // 无种子时显式清空，避免调试回跳重玩时沿用上一轮的旧值。
     state.endingSeed = typeof zone.ending_seed === "string" && zone.ending_seed ? zone.ending_seed : null;
   }
-  state.eatLog.push({ chapterId: currentChapter().id, lineId: line.id, zoneId: zone.id });
+  state.eatLog.push({ chapterId: currentChapter().id, lineId: line.id, zoneId: zone.id, source });
   dom.feedbackCopy.textContent = zone.npc || t("ui.swallowedNpcFallback");
   dom.statusCopy.textContent = zone.eat ? t("ui.swallowed", { text: zone.eat }) : t("ui.swallowedFallback");
   appendLiveChat(zone.npc || t("ui.swallowedFallback"));

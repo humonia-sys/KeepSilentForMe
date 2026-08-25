@@ -265,7 +265,7 @@ const AUDIO_MANIFEST_URL = "audio/manifest.json?v=audio-3";  // ← 不一致
 
 ---
 
-### B-05 · [需设计决策] 第四章「反噬」叙事 vs 数据
+### B-05 · [已解决] 第四章「反噬」叙事 vs 数据
 
 台本：Stage2.5–3，**细条可自爬/预锁**；L4_S02 special：困难下预锁 1.5s；结算台词：「刚才有一条，不是我拖的。」
 
@@ -274,6 +274,8 @@ JSON：仅 `special: parasite_auto_cover` / `prelock_optional`，**无一 zone �
 **漏洞：** 关末指控「不是我拖的」在多数周目可能为假（玩家全程手拖）→ 元叙事撒谎，削弱反转可信度。
 
 **建议：** 至少 1 句真正自动遮挡并写入 `eatLog`（标记 `source: parasite`），结算台词才成立。
+
+**处理（2026-08-25）**：L4_S02 反噬落地——细条从右侧爬入，预锁「不觉得自己做错了」1.5s 后由系统代吃（`scheduleParasiteCover`，复用 `applySelection` 并标注 `source: parasite`），该句玩家无法干预；章末「刚才有一条，不是我拖的」自此每局为真。
 
 ---
 
@@ -790,7 +792,8 @@ manifest 验证。
 - **关末结算台词落地**：L1-L4 章末先播 `settlement`（台本「关末不可遮」她的台词，四语言 locale 新增字段；L1 含面试官「明天来试用」），再弹覆盖层；`chapters.json` 的 `结算台词` 字段移除，避免双语双源。
 - **L1 失败侧结算台词落地**：`settlementFail`（四语言）——L1 失败先播「（面试官A）我们再联系。」，再进 `L1_fail_retry` 过场与重试层；`validate-locales` 增加 `settlementFail` 校验。
 - **旗标全量消费（B-01/B-02/C-06）**：`risk≥3` 计入 L1 失败；`revolt≥1` 改写 L4 章末文案；`mask`/`truth`/`bond`/`control` 结局覆盖层人格回显（≥6 取最高，台本新增「人格回显」表，四语言 `game.persona`）。
-- **仍未处理**：A-04、B-05、C-02、C-03；反噬自动遮挡与真噪声插片属媒体层待办。
+- **B-05（L4 反噬自动遮挡）**：已落地——L4_S02 细条爬入预锁「不觉得自己做错了」1.5s 后由系统代吃，eatLog 标 `source: parasite`；章末「不是我拖的」每局为真。
+- **仍未处理**：A-04、C-02、C-03；真噪声插片属媒体层待办。
 
 ### 2026-08-25 未追踪缺口登记
 

@@ -38,12 +38,13 @@ Complete sentence appears on screen
 **Constraint**: Player can ONLY mask 3-4 pre-defined continuous zones per sentence, no free-form text editing. The current Demo renders the raw sentence once and places transparent hit rectangles from `Range.getClientRects()` over it.
 
 **Echo Digest**: The end-of-chapter memory layer appears only after L1-L4. It keeps one
-`eatLog` entry per selected zone as stable IDs `{ chapterId, lineId, zoneId }` (no display
-text); whisper text is resolved per current locale from the zone's `eat` field via
-`textForZoneId()`. `memoryByChapter` stores the confirmed whisper order as zone-ID arrays;
-`memoryDraft` makes an in-progress arrangement reload-safe; `normalizeSelections()` revalidates
-and de-duplicates zone IDs on restore. This layer never changes flags, page bindings, or
-ending logic.
+`eatLog` entry per selected zone as stable IDs `{ chapterId, lineId, zoneId, source }`
+(`source` is `player` or `parasite`; the L4_S02 backfire line is eaten by the system) with
+no display text; whisper text is resolved per current locale from the zone's `eat` field
+via `textForZoneId()`. `memoryByChapter` stores the confirmed whisper order as zone-ID
+arrays; `memoryDraft` makes an in-progress arrangement reload-safe; `normalizeSelections()`
+revalidates and de-duplicates zone IDs on restore. This layer never changes flags, page
+bindings, or ending logic.
 
 ### Data Structure (script/chapters.json)
 
