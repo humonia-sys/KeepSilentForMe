@@ -775,4 +775,5 @@ manifest 验证。
 - **已验证**：`node --check` 全部运行时文件、`validate-chapters`、`validate-locales` 通过。
 - **B-06（C/C' 视频映射）**：已文档化——`C_consume` 与 `C_cold` 共用 K19/K20（`V5_C`）与 `PAGE_END_C_hollow` 是显式设计，差异仅在结局标题/文案；已写入视频 manifest note、`schedule.md` 映射表，`validate-runtime-videos.mjs` 亦显式声明。
 - **C-04（反转文案）**：已处理——第 2/3 句改为谜语式「被你吃掉的，才是她想说的。/ 留下来的，是念给别人听的。」（四语言、台本分镜、`chapters.json` 同步）。
+- **过场层（narration）落地**：章首按 `narration` 逐条自动播放（时长按字数，1.8s–3.6s），期间黑条隐藏并锁定，结束渲染首句；重启/重开会取消并重置。L0 教学、L5「只剩你了」等台本过场自此可见。
 - **仍未处理**：A-04、B-01、B-02（risk 语义部分）、B-04、B-05、C-02、C-06；L4 混线 1s 噪声与反噬自动遮挡属媒体层待办。

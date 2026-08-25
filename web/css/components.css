@@ -186,6 +186,8 @@
 .memory-echo { max-width: 820px; margin: 11px 0 0; padding-left: 12px; border-left: 1px solid rgba(163, 111, 97, 0.72); color: rgba(224, 220, 207, 0.74); font-size: 12px; line-height: 1.7; letter-spacing: 0.08em; text-wrap: balance; }
 .memory-echo.is-hidden { display: none; }
 .dialogue-text { position: relative; z-index: 1; max-width: 1040px; margin: auto 0; color: #e1e3dc; font-size: clamp(20px, 2.2vw, 34px); font-weight: 400; line-height: 1.75; letter-spacing: 0.04em; text-wrap: balance; text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5); overflow-wrap: break-word; word-break: normal; }
+.dialogue-frame.is-narrating .dialogue-text { color: rgba(190, 197, 185, 0.82); font-size: clamp(17px, 1.9vw, 26px); letter-spacing: 0.1em; }
+.black-bar.is-hidden { display: none; }
 .dialogue-zones { position: absolute; z-index: 2; inset: 0; pointer-events: none; }
 .dialogue-zones .zone { position: absolute; display: block; padding: 0.06em 0.04em 0.11em; border: 1px dotted rgba(205, 212, 202, 0.2); border-top-color: transparent; border-right-color: transparent; border-left-color: transparent; pointer-events: auto; transition: color 150ms ease, background-color 150ms ease, border-color 150ms ease; }
 .dialogue-zones .zone.is-nearest { border-bottom-color: rgba(210, 217, 207, 0.72); background: rgba(186, 196, 184, 0.1); }

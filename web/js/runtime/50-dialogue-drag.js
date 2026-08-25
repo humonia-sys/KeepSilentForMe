@@ -94,6 +94,37 @@ function setBarSource(mode) {
   dom.blackBar.classList.toggle("bar-cracked", mode === "cracked");
 }
 
+function startNarration(lines, index = 0, version = state.transitionVersion) {
+  const line = lines[index];
+  state.locked = true;
+  syncLanguageControls();
+  state.dialogueLayout = null;
+  state.selectedZone = null;
+  state.hoverZone = null;
+  state.hoverTarget = null;
+  dom.dialogueZones.replaceChildren();
+  dom.blackBar.classList.add("is-hidden");
+  dom.dialogueFrame.classList.add("is-narrating");
+  dom.speakerName.textContent = "";
+  dom.lineId.textContent = "";
+  dom.feedbackCopy.textContent = "";
+  dom.zoneCount.textContent = "";
+  dom.dialogueText.replaceChildren(document.createTextNode(line));
+  const duration = Math.max(NARRATION_LINE_MIN_MS, Math.min(NARRATION_LINE_MAX_MS, line.length * NARRATION_LINE_PER_CHAR_MS));
+  scheduleTransition(() => {
+    if (version !== state.transitionVersion) return;
+    if (index + 1 < lines.length) {
+      startNarration(lines, index + 1, version);
+      return;
+    }
+    dom.blackBar.classList.remove("is-hidden");
+    dom.dialogueFrame.classList.remove("is-narrating");
+    state.locked = false;
+    syncLanguageControls();
+    renderLine();
+  }, duration);
+}
+
 function renderLine() {
   const chapter = currentChapter();
   const line = currentLine();
@@ -101,12 +132,21 @@ function renderLine() {
     finishChapter();
     return;
   }
+  // 章首过场：先逐条播放 narration（含 L0 教学、L5 终局独白），再渲染首句。
+  if (line.id === chapter.lines[0].id
+    && Array.isArray(chapter.narration) && chapter.narration.length
+    && state.narrationShown !== chapter.id) {
+    state.narrationShown = chapter.id;
+    startNarration(chapter.narration);
+    return;
+  }
   state.selectedZone = null;
   state.hoverZone = null;
   state.hoverTarget = null;
   state.locked = false;
   syncLanguageControls();
-  dom.blackBar.classList.remove("is-locked", "bar-active", "bar-snap", "bar-locked", "bar-cracked");
+  dom.blackBar.classList.remove("is-locked", "bar-active", "bar-snap", "bar-locked", "bar-cracked", "is-hidden");
+  dom.dialogueFrame.classList.remove("is-narrating");
   const cracked = manifestLayerIds("bar_cracked", line.id)?.length;
   const locked = manifestLayerIds("bar_locked", line.id)?.length;
   setBarSource(cracked ? "cracked" : locked ? "locked" : "hover");

@@ -41,6 +41,9 @@ const ZONE_REACHABLE_WIDTH_RATIO = 0.86;
 const SELECTION_SNAP_DELAY_MS = 260;
 const SELECTION_FEEDBACK_DELAY_MS = 1060;
 const LINE_RENDER_DELAY_MS = 360;
+const NARRATION_LINE_MIN_MS = 1800;
+const NARRATION_LINE_PER_CHAR_MS = 110;
+const NARRATION_LINE_MAX_MS = 3600;
 const DEBUG_KEYS = new Set(["chapter", "line", "ending"]);
 
 const LIVE_VIEWERS = {
@@ -171,6 +174,7 @@ const state = {
   liveViewerTimer: null,
   endingId: null,
   endingSeed: null,
+  narrationShown: null,
   selectedZone: null,
   hoverZone: null,
   hoverTarget: null,

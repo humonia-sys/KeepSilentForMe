@@ -93,6 +93,7 @@ function restartChapter() {
   state.flags.pass = 0;
   state.flags.fail = 0;
   state.flags.hate_leak = 0;
+  state.narrationShown = null;
   state.locked = false;
   syncLanguageControls();
   state.selectedZone = null;
@@ -199,6 +200,7 @@ function resetRun() {
   state.memoryDraft = null;
   state.endingId = null;
   state.endingSeed = null;
+  state.narrationShown = null;
   state.hasSave = false;
   state.pendingMigrationNotice = false;
   state.locked = false;
