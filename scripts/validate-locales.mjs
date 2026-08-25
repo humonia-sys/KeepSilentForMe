@@ -126,7 +126,7 @@ for (const [localeId, , , relativePath] of expectedLocales) {
   for (const chapter of baseChapters) {
     const localChapter = pack.game?.chapters?.[chapter.id];
     if (!isNonEmptyString(localChapter?.title)) errors.push(`${prefix} is missing title for ${chapter.id}`);
-    for (const key of ["settlement", "settlementFail"]) {
+    for (const key of ["settlement", "settlementFail", "secretEcho"]) {
       if (localChapter?.[key] !== undefined
         && (!Array.isArray(localChapter[key]) || !localChapter[key].length
           || localChapter[key].some((item) => !isNonEmptyString(item)))) {

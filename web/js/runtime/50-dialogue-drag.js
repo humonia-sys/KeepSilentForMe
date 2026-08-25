@@ -138,7 +138,14 @@ function renderLine() {
     && Array.isArray(chapter.narration) && chapter.narration.length
     && state.narrationShown !== chapter.id) {
     state.narrationShown = chapter.id;
-    startNarration(chapter.narration);
+    let lines = chapter.narration;
+    // 台本 L5 过场 N02b：第三章秘密被推到门口（secret_risk≥2）时追加回声。
+    if (chapter.id === "L5"
+      && (Number(state.flags.secret_risk) || 0) >= 2
+      && Array.isArray(chapter.secretEcho) && chapter.secretEcho.length) {
+      lines = [...lines, ...chapter.secretEcho];
+    }
+    startNarration(lines);
     return;
   }
   state.selectedZone = null;

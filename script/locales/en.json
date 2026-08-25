@@ -32,7 +32,8 @@
           "(Her) Thank you. ... A few of those sentences would have ruined everything if they had gotten out."
         ],
         "settlementFail": [
-          "(Interviewer A) We'll be in touch."
+          "(Interviewer A) We'll be in touch.",
+          "(Caption) You can try again."
         ]
       },
       "L2": {
@@ -56,7 +57,8 @@
         ],
         "objective": "There is no perfect route. Track trust, distance, secret risk, and cracks.",
         "settlement": [
-          "(Her) ... You heard everything. Don't judge me."
+          "(Her) ... You heard everything. Don't judge me.",
+          "(Narrator) Some doors opened, but the words stayed shut."
         ]
       },
       "L4": {
@@ -77,7 +79,10 @@
           "(Narrator) No interviewers. No friend. No viewers.",
           "(Her) ...Only you remain."
         ],
-        "objective": "Your last cover chooses the ending. There is no menu."
+        "objective": "Your last cover chooses the ending. There is no menu.",
+        "secretEcho": [
+          "(Narrator) That line — \"there's someone else\" — followed you here too."
+        ]
       }
     },
     "lines": {

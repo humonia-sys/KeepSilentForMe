@@ -259,7 +259,7 @@ const AUDIO_MANIFEST_URL = "audio/manifest.json?v=audio-3";  // ← 不一致
 
 对 30 分钟叙事可以接受，但当前写法像「半截系统」。
 
-**处理（2026-08-25）**：L3 章末覆盖层文案按关系旗标分支（台本第三章结算新增「结算变体」表，四语言 `variants`）：`secret_risk≥2` → 秘密跟着朋友下楼；`trust<0` → 朋友走得比来时快；`distance≥2` → 隔着门与雨道别；`crack≥5` → 裂开的声音比雨响；其余保持原句。L5 悬置线回收另议（需台本新台词）。
+**处理（2026-08-25）**：L3 章末覆盖层文案按关系旗标分支（台本第三章结算新增「结算变体」表，四语言 `variants`）：`secret_risk≥2` → 秘密跟着朋友下楼；`trust<0` → 朋友走得比来时快；`distance≥2` → 隔着门与雨道别；`crack≥5` → 裂开的声音比雨响；其余保持原句。L5 悬置线已回收：`secret_risk≥2` 时 L5 过场末尾追加「那句『有别人』，也跟到了这里。」（台本 L5_N02b）。
 
 ---
 
@@ -774,6 +774,7 @@ manifest 验证。
 - **A-01 / A-05（L4 结算）**：新增 `chapterL4Route()`——`apology_perform >= apology_refuse` 走 `L4_perform_to_L5`，否则 `L4_refuse_to_L5`；实现台本「混线取较高」，平票取表演为补足台本未定义的边界；「另一路 1s 噪声」已以运行时近似落地（见下）。
 - **L4 混线 1s 噪声（近似落地）**：`chapterL4Mixed()`（两路均≥1）时，进路线过场前播 1s Web Audio 白噪声 + 画面闪黑（`playNoiseBurst` + `.stage.is-noise`）；真视频插片仍留媒体层。
 - **B-04（L3 关系旗标回声）**：已处理——L3 章末覆盖层按 `secret_risk`/`trust`/`distance`/`crack` 分支文案（台本新增结算变体表，四语言 `variants`；优先级 risk > distrust > distance > crack）。
+- **未落地台词收尾**：L3 旁白「有些门开了，话却关得更死。」并入 L3 settlement 第二条；V1_fail UI「还可以再试一次。」并入 L1 settlementFail 第二条；L5 过场 N02b 秘密回声（`secretEcho`，`secret_risk≥2`）——台本与四语言同步。
 - **结局台词叠字落地**：`game.endings` 对齐台本——A 补「她：……这次我说完了。她取回语言。」，C 改台本字幕「请求还在，人不必在。」，C' 补「只剩条与字灰」（四语言）。
 - **数据解耦（chapters.json）**：移除纯视觉注释字段（顶层 `rules`、各章 `creature`/`bg`/`demo`/`演出`/`narration_note`/`special_note`/`旁白`、行级 `face`），仅保留规则与稳定 ID；`sync.note` 更新，注释内容由 `台本.md` 独有。
 - **A-02（ending_seed）**：实现种子微调——选 L5_S03 zone 时捕获 `ending_seed`（A/B），L5_S06 结算时 `resolveEnding()`：seed A 与 `B_alienate` 相斥改 `A_separate`、seed B 与 `A_separate` 相斥改 `B_alienate`，C/C' 不受影响；`endingSeed` 随存档持久化，恢复时校验为 A/B，无种子 zone 显式清空。`chapters.json` 与台本的种子字段保留。
