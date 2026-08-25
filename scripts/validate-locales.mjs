@@ -23,7 +23,7 @@ const requiredUiKeys = [
   "lineFeedbackFirst", "lineFeedback", "swallowed", "swallowedFallback", "swallowedNpcFallback", "selectionNotFound",
   "sceneLoadRetained", "transitionVideoFailed", "endingSceneFailed", "endingVideoFailed", "revealVideoFailed", "revealVideoFallback",
   "chapterEnded", "nextChapter", "nextChapterCopy", "continue", "retryInterviewEyebrow", "retryInterviewTitle",
-  "retryInterviewAction", "retryInterviewToast", "endingEyebrow", "endingFallbackTitle", "watchReveal", "replayEyebrow",
+  "retryInterviewAction", "retryInterviewToast", "retryLiveEyebrow", "retryLiveTitle", "retryLiveAction", "retryLiveToast", "endingEyebrow", "endingFallbackTitle", "watchReveal", "replayEyebrow",
   "replayTitle", "replayCopy", "replayAction", "memoryEyebrow", "memoryTitle", "memoryCopy", "memoryFragments",
   "memoryWhisper", "memoryPoolLabel", "memoryLaneLabel", "memoryConfirm", "memoryEmpty", "memorySaved", "oldSaveMigrated",
   "errorTitle", "errorLocalServer", "retry", "loadErrorSuffix", "runtimeDataMissing", "fallbackChat",

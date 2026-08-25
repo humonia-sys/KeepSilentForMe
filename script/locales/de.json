@@ -26,7 +26,7 @@
           "(Sie, leise) ... Es geht los.",
           "(Interviewer B) Seien Sie nicht nervös. Sagen Sie einfach, was Ihnen einfällt. -- Genau das ist am gefährlichsten."
         ],
-        "objective": "pass>=4 und fail<2: Zusage. Sonst kann die Szene wiederholt werden."
+        "objective": "pass>=3 und fail<2: Zusage. Sonst kann die Szene wiederholt werden."
       },
       "L2": {
         "title": "Der erste Stream",
@@ -53,7 +53,7 @@
           "(System) Ungewöhnliche Reichweite. Keine Zahlen, nur Rauschen.",
           "(Sie) ... Gut."
         ],
-        "objective": "apology_perform>=2 oder apology_refuse>=2 führt jeweils zu einem Abschluss."
+        "objective": "apology_perform>=1 oder apology_refuse>=1 führt jeweils zu einem Abschluss."
       },
       "L5": {
         "title": "Ein Zimmer ohne Publikum",
@@ -1319,6 +1319,10 @@
     "retryInterviewTitle": "Sie wurde nicht eingestellt.",
     "retryInterviewAction": "Dieses Kapitel noch einmal sagen",
     "retryInterviewToast": "Gespräch wiederholen",
+    "retryLiveEyebrow": "Stream-Vorfall",
+    "retryLiveTitle": "Sie konnte diese Worte nicht zurückhalten.",
+    "retryLiveAction": "Dieses Kapitel noch einmal sagen",
+    "retryLiveToast": "Stream wiederholen",
     "endingEyebrow": "Ende · {endingId}",
     "endingFallbackTitle": "Der letzte Satz",
     "watchReveal": "Wendung ansehen",

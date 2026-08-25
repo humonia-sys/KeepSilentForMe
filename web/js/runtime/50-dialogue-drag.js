@@ -286,6 +286,11 @@ function applySelection(index, version = state.transitionVersion) {
     .filter((item) => Number(item.dataset.zoneIndex) === index)
     .forEach((item) => item.classList.add("is-eaten"));
   applyFlags(zone.flags);
+  if (line.id === "L5_S03") {
+    // L5_S03 决定终局种子：Z01→A、Z02/Z04→B、Z03（这一次，）无种子；
+    // 无种子时显式清空，避免调试回跳重玩时沿用上一轮的旧值。
+    state.endingSeed = typeof zone.ending_seed === "string" && zone.ending_seed ? zone.ending_seed : null;
+  }
   state.eatLog.push({ chapterId: currentChapter().id, lineId: line.id, zoneId: zone.id });
   dom.feedbackCopy.textContent = zone.npc || t("ui.swallowedNpcFallback");
   dom.statusCopy.textContent = zone.eat ? t("ui.swallowed", { text: zone.eat }) : t("ui.swallowedFallback");
@@ -301,9 +306,19 @@ function applySelection(index, version = state.transitionVersion) {
   scheduleTransition(() => continueAfterSelection(transition, version), SELECTION_FEEDBACK_DELAY_MS);
 }
 
+function resolveEnding(s06Ending, seed) {
+  // 台本：L5_S06 主判定，L5_S03 的 ending_seed 微调。
+  // seed A（想自己说）与 S06 的 B_alienate 相斥时回 A_separate；
+  // seed B（仍依赖你）与 S06 的 A_separate 相斥时回 B_alienate；
+  // C_consume / C_cold 不受种子影响。
+  if (seed === "A" && s06Ending === "B_alienate") return "A_separate";
+  if (seed === "B" && s06Ending === "A_separate") return "B_alienate";
+  return s06Ending;
+}
+
 function commitSelection(zone, line) {
   if (line.is_ending) {
-    const endingId = zone.ending ?? "A_separate";
+    const endingId = resolveEnding(zone.ending ?? "A_separate", state.endingSeed);
     state.endingId = endingId;
     return { kind: "ending", endingId };
   }

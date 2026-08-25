@@ -5,29 +5,54 @@ function chapterResult(chapter) {
   if (chapter.id === "L1") {
     const pass = state.flags.pass ?? 0;
     const fail = state.flags.fail ?? 0;
-    return pass >= 4 && fail < 2 ? "pass" : "fail";
+    return pass >= 3 && fail < 2 ? "pass" : "fail";
+  }
+  if (chapter.id === "L2") {
+    const hateLeak = state.flags.hate_leak ?? 0;
+    return hateLeak < 2 ? "pass" : "fail";
   }
   return "pass";
+}
+
+// L4 无失败重开：任何周目都会收束，结算即「走表演线还是硬刚线」。
+// 台本第四章结算：混线取较高，平票取表演（apology_perform >= apology_refuse）；
+// 「另一路 1s 噪声闪入」属媒体层，运行时暂未插片。
+function chapterL4Route() {
+  const perform = Number(state.flags.apology_perform) || 0;
+  const refuse = Number(state.flags.apology_refuse) || 0;
+  return perform >= refuse ? "perform" : "refuse";
 }
 
 function finishChapter() {
   const chapter = currentChapter();
   if (LIVE_CHAPTER_IDS.has(chapter?.id)) hideLiveChat();
-  if (chapter.id === "L1" && chapterResult(chapter) === "fail") {
+  if (chapterResult(chapter) === "fail") {
     hideOverlay();
     state.locked = true;
-    void playChapterOutro("L1_fail_retry", () => {
-      if (currentChapter()?.id !== "L1") return;
-      state.locked = true;
+    if (chapter.id === "L1") {
+      void playChapterOutro("L1_fail_retry", () => {
+        if (currentChapter()?.id !== "L1") return;
+        state.locked = true;
+        syncLanguageControls();
+        showOverlay(
+          t("ui.retryInterviewEyebrow"),
+          t("ui.retryInterviewTitle"),
+          t("ui.retryInterviewAction"),
+          () => restartChapter(),
+          t("ui.retryInterviewToast"),
+        );
+      });
+    } else if (chapter.id === "L2") {
+      // 台本第二章：hate_leak≥2 即直播事故，提示后重开本章（无独立事故视频）。
       syncLanguageControls();
       showOverlay(
-        t("ui.retryInterviewEyebrow"),
-        t("ui.retryInterviewTitle"),
-        t("ui.retryInterviewAction"),
+        t("ui.retryLiveEyebrow"),
+        t("ui.retryLiveTitle"),
+        t("ui.retryLiveAction"),
         () => restartChapter(),
-        t("ui.retryInterviewToast"),
+        t("ui.retryLiveToast"),
       );
-    });
+    }
     return;
   }
   if (state.chapterIndex >= state.chapters.length - 1) return;
@@ -67,6 +92,7 @@ function restartChapter() {
   state.lineIndex = 0;
   state.flags.pass = 0;
   state.flags.fail = 0;
+  state.flags.hate_leak = 0;
   state.locked = false;
   syncLanguageControls();
   state.selectedZone = null;
@@ -172,6 +198,7 @@ function resetRun() {
   state.memoryByChapter = {};
   state.memoryDraft = null;
   state.endingId = null;
+  state.endingSeed = null;
   state.hasSave = false;
   state.pendingMigrationNotice = false;
   state.locked = false;
@@ -208,6 +235,7 @@ function saveState() {
       order: state.memoryDraft.order,
     } : null,
     endingId: state.endingId,
+    endingSeed: state.endingSeed,
   }));
   if (saved) {
     state.hasSave = true;
@@ -250,6 +278,7 @@ function restoreState() {
       state.memoryByChapter = normalizeMemoryByChapter(saved.memoryByChapter);
       state.memoryDraft = normalizeMemoryDraft(saved.memoryDraft);
       state.endingId = typeof saved.endingId === "string" ? saved.endingId : null;
+      state.endingSeed = saved.endingSeed === "A" || saved.endingSeed === "B" ? saved.endingSeed : null;
       state.hasSave = true;
       return;
     }
@@ -270,6 +299,7 @@ function restoreState() {
     state.memoryByChapter = {};
     state.memoryDraft = null;
     state.endingId = typeof saved.endingId === "string" ? saved.endingId : null;
+    state.endingSeed = saved.endingSeed === "A" || saved.endingSeed === "B" ? saved.endingSeed : null;
     state.hasSave = true;
     state.pendingMigrationNotice = true;
     saveState();

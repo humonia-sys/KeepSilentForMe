@@ -26,7 +26,7 @@
           "（她·小声）……开始了。",
           "（面试官B）别紧张，想到什么说什么。——正是最危险的一句。"
         ],
-        "objective": "pass≥4且fail<2→录取；否则可重来"
+        "objective": "pass≥3且fail<2→录取；否则可重来"
       },
       "L2": {
         "title": "第一次直播",
@@ -53,7 +53,7 @@
           "（系统）热度异常·不显示数字，只听噪音",
           "（她）……好。"
         ],
-        "objective": "apology_perform≥2或apology_refuse≥2皆可收束"
+        "objective": "apology_perform≥1或apology_refuse≥1皆可收束"
       },
       "L5": {
         "title": "没有观众的房间",
@@ -1319,6 +1319,10 @@
     "retryInterviewTitle": "她没有被录用。",
     "retryInterviewAction": "把这一章重新说一遍",
     "retryInterviewToast": "重试面试",
+    "retryLiveEyebrow": "直播事故",
+    "retryLiveTitle": "她没压住那些话。",
+    "retryLiveAction": "把这一章重新说一遍",
+    "retryLiveToast": "重试直播",
     "endingEyebrow": "结局 · {endingId}",
     "endingFallbackTitle": "最后一句",
     "watchReveal": "观看反转",

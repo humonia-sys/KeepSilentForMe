@@ -241,12 +241,8 @@ function chapterOutroSequenceId(chapter) {
       return "L2_to_L3";
     case "L3":
       return "L3_to_L4";
-    case "L4": {
-      const perform = Number(state.flags.apology_perform) || 0;
-      const refuse = Number(state.flags.apology_refuse) || 0;
-      // 混线平票取表演；当前运行时没有额外的 1 秒噪声插片。
-      return perform >= refuse ? "L4_perform_to_L5" : "L4_refuse_to_L5";
-    }
+    case "L4":
+      return chapterL4Route() === "perform" ? "L4_perform_to_L5" : "L4_refuse_to_L5";
     default:
       return "";
   }

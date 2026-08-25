@@ -170,6 +170,7 @@ const state = {
   liveViewerCount: 0,
   liveViewerTimer: null,
   endingId: null,
+  endingSeed: null,
   selectedZone: null,
   hoverZone: null,
   hoverTarget: null,

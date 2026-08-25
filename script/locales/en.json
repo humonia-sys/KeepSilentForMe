@@ -26,7 +26,7 @@
           "(Her, quietly) ...It has started.",
           "(Interviewer B) Relax. Say whatever comes to mind. -- The most dangerous sentence."
         ],
-        "objective": "pass >= 4 and fail < 2: hired. Otherwise, try again."
+        "objective": "pass >= 3 and fail < 2: hired. Otherwise, try again."
       },
       "L2": {
         "title": "First Stream",
@@ -53,7 +53,7 @@
           "(System) Abnormal traffic. No numbers, only noise.",
           "(Her) ...All right."
         ],
-        "objective": "Either apology_perform >= 2 or apology_refuse >= 2 can close this chapter."
+        "objective": "Either apology_perform >= 1 or apology_refuse >= 1 can close this chapter."
       },
       "L5": {
         "title": "A Room Without Viewers",
@@ -1319,6 +1319,10 @@
     "retryInterviewTitle": "She was not hired.",
     "retryInterviewAction": "Speak this chapter again",
     "retryInterviewToast": "Retry interview",
+    "retryLiveEyebrow": "Stream accident",
+    "retryLiveTitle": "She couldn't hold those words back.",
+    "retryLiveAction": "Speak this chapter again",
+    "retryLiveToast": "Retry stream",
     "endingEyebrow": "Ending - {endingId}",
     "endingFallbackTitle": "The last sentence",
     "watchReveal": "Watch reveal",
