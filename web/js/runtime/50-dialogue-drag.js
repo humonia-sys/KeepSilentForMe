@@ -184,8 +184,10 @@ function setBarCenter(x, y) {
 
 function positionBarAtRest() {
   if (state.dragging || state.locked) return;
+  // 直播章（L2/L4）聊天框在右侧，休息位挪到左侧避免黑条挡住弹幕。
+  const liveChapter = LIVE_CHAPTER_IDS.has(currentChapter()?.id);
   setBarCenter(
-    window.innerWidth * BAR_REST_X_RATIO,
+    window.innerWidth * (liveChapter ? BAR_REST_X_RATIO_LIVE : BAR_REST_X_RATIO),
     Math.min(window.innerHeight * BAR_REST_Y_RATIO, window.innerHeight - BAR_REST_BOTTOM_GUTTER),
   );
 }
