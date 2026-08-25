@@ -37,10 +37,13 @@ Complete sentence appears on screen
 
 **Constraint**: Player can ONLY mask 3-4 pre-defined continuous zones per sentence, no free-form text editing. The current Demo renders the raw sentence once and places transparent hit rectangles from `Range.getClientRects()` over it.
 
-**Echo Digest**: The end-of-chapter memory layer appears only after L1-L4. It preserves every
-eaten fragment, including duplicates, and stores `eatLog` entries as `{ chapterId, text }`.
-`memoryByChapter` stores confirmed whisper order; `memoryDraft` makes an in-progress arrangement
-reload-safe. This layer never changes flags, page bindings, or ending logic.
+**Echo Digest**: The end-of-chapter memory layer appears only after L1-L4. It keeps one
+`eatLog` entry per selected zone as stable IDs `{ chapterId, lineId, zoneId }` (no display
+text); whisper text is resolved per current locale from the zone's `eat` field via
+`textForZoneId()`. `memoryByChapter` stores the confirmed whisper order as zone-ID arrays;
+`memoryDraft` makes an in-progress arrangement reload-safe; `normalizeSelections()` revalidates
+and de-duplicates zone IDs on restore. This layer never changes flags, page bindings, or
+ending logic.
 
 ### Data Structure (script/chapters.json)
 
@@ -186,13 +189,15 @@ From art-style.md:
 ### Flag System
 
 Flags are counters tracked in `gameState.flags`:
-- `pass`/`fail` - L1 settlement (need `pass >= 4 && fail < 2`; otherwise the chapter retry overlay appears)
-- `hate_leak` - Recorded during L2; current Demo continues without a separate L2 retry branch
-- `apology_perform`/`apology_refuse` - Recorded during L4; current Demo does not yet select a separate video route
+- `pass`/`fail` - L1 settlement (need `pass >= 3 && fail < 2`; otherwise the chapter retry overlay appears)
+- `hate_leak` - L2 settlement (`hate_leak < 2` passes; otherwise the live-accident retry overlay appears)
+- `apology_perform`/`apology_refuse` - L4 route: the higher count selects the perform/refuse chapter outro (tie → perform)
 - `mask`, `truth`, `bond`, `crack`, `control`, `trust`, `distance`, `secret_risk` - Recorded for narrative/debug use, not currently consumed by chapter progression
 
-The four ending IDs are selected directly by the zones on `L5_S06`. `C_consume`
-and `C_cold` have separate logical IDs but share `PAGE_END_C_hollow`.
+The four ending IDs are selected by the zones on `L5_S06`, with the `ending_seed`
+captured on `L5_S03` nudging A/B (seed `A` + `B_alienate` → `A_separate`; seed `B`
++ `A_separate` → `B_alienate`; C endings are unaffected). `C_consume` and `C_cold`
+have separate logical IDs but share `PAGE_END_C_hollow` and the `V5_C` video sequence.
 Known rule and narrative mismatches are tracked in `issue.md`.
 
 ## Key Documents Quick Reference

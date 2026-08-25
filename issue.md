@@ -37,7 +37,7 @@
 
 ---
 
-### A-01 · [需设计决策] 第四章结算条件自相矛盾，且存在「双 0 / 双不足」空洞
+### A-01 · [已解决] 第四章结算条件自相矛盾，且存在「双 0 / 双不足」空洞
 
 | 来源 | 条件 |
 | --- | --- |
@@ -62,7 +62,7 @@
 
 ---
 
-### A-02 · [需设计决策] `L5_S03` 的 `ending_seed`「微调」没有算法
+### A-02 · [已解决] `L5_S03` 的 `ending_seed`「微调」没有算法
 
 台本写：
 
@@ -132,7 +132,7 @@ V3_out 仅「暗示舆论将至」，不能替代一次可玩/可看的事件节
 
 ---
 
-### A-05 · [需设计决策后实现] Web 运行时未实现 L4 结算逻辑
+### A-05 · [已解决] Web 运行时未实现 L4 结算逻辑
 
 **位置**：`web/js/main.js:1004-1011`
 
@@ -231,7 +231,7 @@ const AUDIO_MANIFEST_URL = "audio/manifest.json?v=audio-3";  // ← 不一致
 
 ---
 
-### B-02 · [需设计决策] 第一章 `pass≥4 且 fail<2` 偏紧，且 `risk` 语义含混
+### B-02 · [部分处理] 第一章 `pass≥4 且 fail<2` 偏紧，且 `risk` 语义含混
 
 - 7 句各选 1 zone；`pass+` 分布尚可，但随机全选通过率约 **12%**。
 - 多句「正解」只有 1 个 `pass+`，其余为 `fail+` 或 `risk+`。
@@ -239,6 +239,8 @@ const AUDIO_MANIFEST_URL = "audio/manifest.json?v=audio-3";  // ← 不一致
 - 失败「重来」范围未写清：整章重置 vs 从本句重来 vs 保留已有 pass/fail。
 
 **建议：** 明确 risk 是否计软失败、失败时 flag 是否清零；若面向 Jam 受众，可略降到 `pass≥3` 或增加每句 pass 供给。
+
+**处理（2026-08-25）**：门槛部分已按提交 `cba3b51` 的设计意图落为 `pass>=3 && fail<2`（代码/数据/台本/四语言 objective 同步）；`risk` 是否计软失败仍未定，维持「仅记录」。
 
 ---
 
@@ -271,7 +273,7 @@ JSON：仅 `special: parasite_auto_cover` / `prelock_optional`，**无一 zone �
 
 ---
 
-### B-06 · [需媒体决策] 终局 C / C' 与视频映射
+### B-06 · [已文档化] 终局 C / C' 与视频映射
 
 | zone | ending | 视频 |
 | --- | --- | --- |
@@ -281,6 +283,8 @@ JSON：仅 `special: parasite_auto_cover` / `prelock_optional`，**无一 zone �
 | 我 | C_cold | V5_C（差分化仅文案） |
 
 `endings` 字典有 4 个 id，视频只有 3 条；C' 依赖同一 `V5_C` 内部分支——需在播放器逻辑写清，否则 C_cold 易被当成缺失资源。
+
+**处理（2026-08-25）**：已文档化——`web/video/manifest.json` 增加 note 说明；`schedule.md` 补「运行时结局映射」表；`scripts/validate-runtime-videos.mjs` 的 `expectedSequences` 显式写明 `C_cold` 与 `C_consume` 共用 K19/K20 与 `PAGE_END_C_hollow`，差异仅在结局标题/文案，不是缺失资源。
 
 ---
 
@@ -617,7 +621,7 @@ const ZONE_REACHABLE_MIN_DISTANCE = 150;
 **建议**：覆盖层关闭时恢复可继续状态，或章节覆盖层禁止 `Esc` 关闭；结局覆盖层则应明确
 只允许“重新开始”。
 
-### R-02 · P1 · [需设计决策后实现] L2 的 `hate_leak` 目标没有运行时结算
+### R-02 · P1 · [已解决] L2 的 `hate_leak` 目标没有运行时结算
 
 `script/chapters.json` 声明 L2 目标为 `hate_leak<2`，否则应进入事故/重来分支；但
 `web/js/main.js:1004-1011` 的 `chapterResult()` 只实现 L1，`finishChapter()` 也只处理
@@ -757,3 +761,15 @@ manifest 验证。
 - **已修复**：反转视频的“跳过”现在会结束整个 K21→K22 序列，不会跳到下一镜头继续播放。
 - **已修复**：重开或按 `R` 时统一取消视频/提示/直播计时器，并释放黑条与记忆碎片的指针捕获，避免旧状态污染新局。
 - **已验证**：35 个台词调试入口、结局反转跳过、禁用 `localStorage` 启动、视频/场景/音频/章节校验和 Tauri 产物组装均通过。
+
+### 2026-08-25 规则对齐实现
+
+按台本实现此前标记「需设计决策」的结算项；`台本.md` 原文未改，代码/数据服从台本：
+
+- **A-05 / R-02（L2 结算）**：`web/js/runtime/70-flow.js` 的 `chapterResult()` 增加 L2 分支——`hate_leak < 2` 下播，否则「直播事故」重试层（新增 `ui.retryLive*` 四语言文案，并加入 `validate-locales` 白名单）并 `restartChapter()` 重开；重开时清零 `hate_leak`。
+- **A-01 / A-05（L4 结算）**：新增 `chapterL4Route()`——`apology_perform >= apology_refuse` 走 `L4_perform_to_L5`，否则 `L4_refuse_to_L5`；实现台本「混线取较高」，平票取表演为补足台本未定义的边界；「另一路 1s 噪声」仍属媒体层待办（已写进代码注释与 `schedule.md`）。
+- **A-02（ending_seed）**：实现种子微调——选 L5_S03 zone 时捕获 `ending_seed`（A/B），L5_S06 结算时 `resolveEnding()`：seed A 与 `B_alienate` 相斥改 `A_separate`、seed B 与 `A_separate` 相斥改 `B_alienate`，C/C' 不受影响；`endingSeed` 随存档持久化，恢复时校验为 A/B，无种子 zone 显式清空。`chapters.json` 与台本的种子字段保留。
+- **L1/L4 门槛（B-02 / 提交 cba3b51）**：按提交 `cba3b51`「for better player flow」的设计意图统一为 L1 `pass>=3 && fail<2`、L4 `apology_perform>=1 || apology_refuse>=1`——代码、`chapters.json`、`台本.md` 与四语言 objective 全部同步；L4 运行时仍为「取较高、平票取表演」。
+- **已验证**：`node --check` 全部运行时文件、`validate-chapters`、`validate-locales` 通过。
+- **B-06（C/C' 视频映射）**：已文档化——`C_consume` 与 `C_cold` 共用 K19/K20（`V5_C`）与 `PAGE_END_C_hollow` 是显式设计，差异仅在结局标题/文案；已写入视频 manifest note、`schedule.md` 映射表，`validate-runtime-videos.mjs` 亦显式声明。
+- **仍未处理**：A-04、B-01、B-02（risk 语义部分）、B-04、B-05、C-02 至 C-04、C-06；L4 混线 1s 噪声与反噬自动遮挡属媒体层待办。

@@ -408,8 +408,19 @@
 | `V2_out` | 直播结束→肩侧 Stage2 |
 | `V3_out` | 朋友离去→门关 |
 | `V4_perform` / `V4_refuse` | 道歉双路线 |
-| `V5_A` / `V5_B` / `V5_C` | 终局三向 |
+| `V5_A` / `V5_B` / `V5_C` | 终局三向（C' 并入 `V5_C`） |
 | `V_RV` | 认知反转回放 |
+
+**运行时结局映射**（`web/video/manifest.json` sequences + `art/v4/scenes/manifest.json` endingPages）：
+
+| 结局 ID | 视频序列 | 整页图 |
+| --- | --- | --- |
+| `A_separate` | K15→K16（`V5_A`） | `PAGE_END_A_separate` |
+| `B_alienate` | K17→K18（`V5_B`） | `PAGE_END_B_alienate` |
+| `C_consume` | K19→K20（`V5_C`） | `PAGE_END_C_hollow` |
+| `C_cold` | K19→K20（与 `C_consume` 共用 `V5_C`） | `PAGE_END_C_hollow`（同左） |
+
+`C_consume` 与 `C_cold` 是两个逻辑结局 ID，但共用同一 `V5_C` 视频与同一整页图，当前差异仅在结局标题/文案；台本「C' 差」的镜中演出暂未单独出片。`scripts/validate-runtime-videos.mjs` 的 `expectedSequences` 已将两者显式写为同组片段，并非缺失资源。
 
 **与玩法边界**：视频段 **不可操作**；黑条只在对白 UI 段出现。视频负责「电影连接」，不负责解谜。
 
@@ -991,25 +1002,26 @@ function snapToZone(bar, targetRect, callback) {
 
 ### 11.8 各章结算（抄这张表写 if）
 
-> **实现状态说明**：下表是目标设计表，不是当前 Demo 的完整运行契约。当前代码实际只
-> 对 L1 执行 `pass >= 4 && fail < 2`，失败显示重试层；L2/L3/L4 旗标会累加但不会改变
-> 当前章节推进；L5_S06 的 zone 直接映射四个结局 ID。规则冲突见根目录 `issue.md`，
-> 在数据规则统一前不要据此新增视频或分支逻辑。
+> **实现状态说明**：当前代码对 L1 执行 `pass >= 3 && fail < 2`、对 L2 执行 `hate_leak < 2`，
+> 失败均显示重试层；L3 只记录旗标；L4 按 `apology_perform >= apology_refuse` 选表演/硬刚
+> 过场（混线取较高，平票取表演）；L5 主判定 L5_S06 的 `ending`，L5_S03 的 `ending_seed`（A/B）
+> 微调 A/B 两结局（C/C' 不受影响）。
 
 | 章 | 通过/走向 | 条件（读 flags） | 视频 |
 | --- | --- | --- | --- |
 | L0 | 必过 | 任意选完 L0_S01 | `V0_out` |
-| L1 | 录取 | `pass>=4 && fail<2` | `V1_pass` |
+| L1 | 录取 | `pass>=3 && fail<2` | `V1_pass` |
 | L1 | 重来 | 否则 | `V1_fail` 或直接 `lineIndex=0` |
 | L2 | 下播 | `hate_leak<2` | `V2_out` |
 | L2 | 事故重来 | 否则 | 提示后重开章 |
 | L3 | 无胜负 | 只记录 crack/trust 等 | 必播 `V3_out` |
-| L4 | 表演线 | `apology_perform >= apology_refuse` 且 perform≥1 | `V4_perform` |
+| L4 | 表演线 | `apology_perform >= apology_refuse`（混线取较高，平票取表演） | `V4_perform` |
 | L4 | 硬刚线 | 否则（refuse 更高） | `V4_refuse` |
-| L5 | 结局 | 看 L5_S06 所选 zone 的 `ending` 字段 | `V5_A/B/C` |
+| L5 | 结局 | 看 L5_S06 zone 的 `ending`；L5_S03 `ending_seed` 微调 A/B（C/C' 不参与） | `V5_A/B/C` |
 | 后 | 反转 | 任意结局后 | `V_RV`（eatLog 取 3 条叠 UI） |
 
 L5 zone 的 `ending` 示例：`A_separate` → 播 `V5_A`。
+`ending_seed` 微调：seed A 与 `B_alienate` 相斥时回 `A_separate`；seed B 与 `A_separate` 相斥时回 `B_alienate`。
 
 ### 11.9 黑条手感参数（可调表）
 
@@ -1250,7 +1262,7 @@ function playVideoWithAudio(videoId) {
       "title": "面试",
       "scene": "meeting_room",  // 对应 manifest.sceneBindings.meeting_room
       "creature": "stage1",     // CSS类名: .creature.stage-1
-      "goal": "pass>=4 && fail<2",
+      "goal": "pass>=3 && fail<2",
       "lines": [/* 见下 */],
       "outro_video": "V1_pass",
       "narration": ["旁白1", "旁白2"]

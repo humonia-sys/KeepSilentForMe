@@ -2,6 +2,7 @@
   "schemaVersion": 1,
   "id": "keep-silent-for-me-runtime-video",
   "format": "video/mp4",
+  "note": "C_consume 与 C_cold 共用 K19/K20（V5_C）与 PAGE_END_C_hollow，差异仅在结局标题与文案，非缺失资源。",
   "default": {
     "muted": true,
     "playsInline": true,
