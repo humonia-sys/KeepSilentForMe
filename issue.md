@@ -769,7 +769,8 @@ manifest 验证。
 按台本实现此前标记「需设计决策」的结算项；`台本.md` 原文未改，代码/数据服从台本：
 
 - **A-05 / R-02（L2 结算）**：`web/js/runtime/70-flow.js` 的 `chapterResult()` 增加 L2 分支——`hate_leak < 2` 下播，否则「直播事故」重试层（新增 `ui.retryLive*` 四语言文案，并加入 `validate-locales` 白名单）并 `restartChapter()` 重开；重开时清零 `hate_leak`。
-- **A-01 / A-05（L4 结算）**：新增 `chapterL4Route()`——`apology_perform >= apology_refuse` 走 `L4_perform_to_L5`，否则 `L4_refuse_to_L5`；实现台本「混线取较高」，平票取表演为补足台本未定义的边界；「另一路 1s 噪声」仍属媒体层待办（已写进代码注释与 `schedule.md`）。
+- **A-01 / A-05（L4 结算）**：新增 `chapterL4Route()`——`apology_perform >= apology_refuse` 走 `L4_perform_to_L5`，否则 `L4_refuse_to_L5`；实现台本「混线取较高」，平票取表演为补足台本未定义的边界；「另一路 1s 噪声」已以运行时近似落地（见下）。
+- **L4 混线 1s 噪声（近似落地）**：`chapterL4Mixed()`（两路均≥1）时，进路线过场前播 1s Web Audio 白噪声 + 画面闪黑（`playNoiseBurst` + `.stage.is-noise`）；真视频插片仍留媒体层。
 - **A-02（ending_seed）**：实现种子微调——选 L5_S03 zone 时捕获 `ending_seed`（A/B），L5_S06 结算时 `resolveEnding()`：seed A 与 `B_alienate` 相斥改 `A_separate`、seed B 与 `A_separate` 相斥改 `B_alienate`，C/C' 不受影响；`endingSeed` 随存档持久化，恢复时校验为 A/B，无种子 zone 显式清空。`chapters.json` 与台本的种子字段保留。
 - **L1/L4 门槛（B-02 / 提交 cba3b51）**：按提交 `cba3b51`「for better player flow」的设计意图统一为 L1 `pass>=3 && fail<2`、L4 `apology_perform>=1 || apology_refuse>=1`——代码、`chapters.json`、`台本.md` 与四语言 objective 全部同步；L4 运行时仍为「取较高、平票取表演」。
 - **已验证**：`node --check` 全部运行时文件、`validate-chapters`、`validate-locales` 通过。
@@ -778,7 +779,7 @@ manifest 验证。
 - **过场层（narration）落地**：章首按 `narration` 逐条自动播放（时长按字数，1.8s–3.6s），期间黑条隐藏并锁定，结束渲染首句；重启/重开会取消并重置。L0 教学、L5「只剩你了」等台本过场自此可见。
 - **关末结算台词落地**：L1-L4 章末先播 `settlement`（台本「关末不可遮」她的台词，四语言 locale 新增字段；L1 含面试官「明天来试用」），再弹覆盖层；`chapters.json` 的 `结算台词` 字段移除，避免双语双源。
 - **L1 失败侧结算台词落地**：`settlementFail`（四语言）——L1 失败先播「（面试官A）我们再联系。」，再进 `L1_fail_retry` 过场与重试层；`validate-locales` 增加 `settlementFail` 校验。
-- **仍未处理**：A-04、B-01、B-02（risk 语义部分）、B-04、B-05、C-02、C-03、C-06；L4 混线 1s 噪声与反噬自动遮挡属媒体层待办。
+- **仍未处理**：A-04、B-01、B-02（risk 语义部分）、B-04、B-05、C-02、C-03、C-06；反噬自动遮挡与真噪声插片属媒体层待办。
 
 ### 2026-08-25 未追踪缺口登记
 

@@ -1004,7 +1004,7 @@ function snapToZone(bar, targetRect, callback) {
 
 > **实现状态说明**：当前代码对 L1 执行 `pass >= 3 && fail < 2`、对 L2 执行 `hate_leak < 2`，
 > 失败均显示重试层；L3 只记录旗标；L4 按 `apology_perform >= apology_refuse` 选表演/硬刚
-> 过场（混线取较高，平票取表演）；L5 主判定 L5_S06 的 `ending`，L5_S03 的 `ending_seed`（A/B）
+> 过场（混线取较高，平票取表演；混线先播 1s 噪声近似）；L5 主判定 L5_S06 的 `ending`，L5_S03 的 `ending_seed`（A/B）
 > 微调 A/B 两结局（C/C' 不受影响）。
 
 | 章 | 通过/走向 | 条件（读 flags） | 视频 |
@@ -1015,7 +1015,7 @@ function snapToZone(bar, targetRect, callback) {
 | L2 | 下播 | `hate_leak<2` | `V2_out` |
 | L2 | 事故重来 | 否则 | 提示后重开章 |
 | L3 | 无胜负 | 只记录 crack/trust 等 | 必播 `V3_out` |
-| L4 | 表演线 | `apology_perform >= apology_refuse`（混线取较高，平票取表演） | `V4_perform` |
+| L4 | 表演线 | `apology_perform >= apology_refuse`（混线取较高，平票取表演；混线先播 1s 噪声近似） | `V4_perform` |
 | L4 | 硬刚线 | 否则（refuse 更高） | `V4_refuse` |
 | L5 | 结局 | 看 L5_S06 zone 的 `ending`；L5_S03 `ending_seed` 微调 A/B（C/C' 不参与） | `V5_A/B/C` |
 | 后 | 反转 | 任意结局后 | `V_RV`（eatLog 取 3 条叠 UI） |

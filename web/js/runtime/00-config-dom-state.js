@@ -44,6 +44,7 @@ const LINE_RENDER_DELAY_MS = 360;
 const NARRATION_LINE_MIN_MS = 1800;
 const NARRATION_LINE_PER_CHAR_MS = 110;
 const NARRATION_LINE_MAX_MS = 3600;
+const L4_MIXED_NOISE_MS = 1000;
 const DEBUG_KEYS = new Set(["chapter", "line", "ending"]);
 
 const LIVE_VIEWERS = {

@@ -174,6 +174,33 @@ function ping(kind) {
   }
 }
 
+// 台本 L4 混线「另一路用 1s 闪入噪声」的运行时近似：白噪声脉冲，真插片留媒体层。
+function playNoiseBurst(durationMs = L4_MIXED_NOISE_MS) {
+  if (!state.sound || state.audioSettings.sfxVolume <= 0) return Promise.resolve();
+  return new Promise((resolve) => {
+    const settle = window.setTimeout(resolve, durationMs + 120);
+    try {
+      const context = audioContext();
+      if (context.state === "suspended") void context.resume();
+      const length = Math.max(1, Math.floor(context.sampleRate * durationMs / 1000));
+      const buffer = context.createBuffer(1, length, context.sampleRate);
+      const data = buffer.getChannelData(0);
+      for (let i = 0; i < length; i += 1) data[i] = (Math.random() * 2 - 1) * 0.6;
+      const source = context.createBufferSource();
+      source.buffer = buffer;
+      const gain = context.createGain();
+      gain.gain.setValueAtTime(0.12 * state.audioSettings.sfxVolume, context.currentTime);
+      gain.gain.linearRampToValueAtTime(0.0001, context.currentTime + durationMs / 1000);
+      source.connect(gain).connect(context.destination);
+      source.onended = () => { window.clearTimeout(settle); resolve(); };
+      source.start();
+    } catch (error) {
+      window.clearTimeout(settle);
+      resolve();
+    }
+  });
+}
+
 function bindEvents() {
   dom.blackBar.addEventListener("pointerdown", onPointerDown);
   dom.blackBar.addEventListener("pointermove", onPointerMove);

@@ -272,6 +272,12 @@ async function playChapterOutroThenAdvance(chapter) {
   hideMemoryOverlay();
   state.locked = true;
   syncLanguageControls();
+  if (chapter.id === "L4" && chapterL4Mixed()) {
+    // 台本：混线时另一路用 1s 闪入噪声（运行时近似，真插片留媒体层）。
+    dom.stage.classList.add("is-noise");
+    await playNoiseBurst(L4_MIXED_NOISE_MS);
+    dom.stage.classList.remove("is-noise");
+  }
   const result = await playChapterOutro(sequenceId);
   if (result === null) return;
   if (currentChapter()?.id !== chapter?.id) return;

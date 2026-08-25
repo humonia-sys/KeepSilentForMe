@@ -16,11 +16,18 @@ function chapterResult(chapter) {
 
 // L4 无失败重开：任何周目都会收束，结算即「走表演线还是硬刚线」。
 // 台本第四章结算：混线取较高，平票取表演（apology_perform >= apology_refuse）；
-// 「另一路 1s 噪声闪入」属媒体层，运行时暂未插片。
+// 「另一路 1s 噪声闪入」在混线时以 Web Audio 噪声 + 画面闪黑近似（见 20-video.js）。
 function chapterL4Route() {
   const perform = Number(state.flags.apology_perform) || 0;
   const refuse = Number(state.flags.apology_refuse) || 0;
   return perform >= refuse ? "perform" : "refuse";
+}
+
+// 台本「混线：都有」——两路都至少 1 次，另一路用 1s 闪入噪声。
+function chapterL4Mixed() {
+  const perform = Number(state.flags.apology_perform) || 0;
+  const refuse = Number(state.flags.apology_refuse) || 0;
+  return perform >= 1 && refuse >= 1;
 }
 
 function finishChapter() {
