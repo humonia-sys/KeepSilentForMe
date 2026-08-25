@@ -149,3 +149,18 @@
 | `ending_seed` 语义 | seed 与 S06 在 A/B 相斥时覆盖，C/C' 不参与 | `issue.md` A-02 建议的伪代码方向 |
 | L1 门槛 | `pass>=3 && fail<2` | 按提交 `cba3b51` 的设计意图，代码/数据/台本/四语言全链同步 |
 | 多出现 zone | 视为已修复 | 运行时支持 `start`/`occurrence`，数据已改唯一文本 |
+
+---
+
+## 7. 初版之后的追加工作（2026-08-25）
+
+| 事项 | 结果 |
+|---|---|
+| B-06（C/C' 视频映射） | 已文档化（video manifest note + schedule 映射表 + issue 状态标记） |
+| Windows portable zip | CI 新增 `-portable` 产物（`actions/upload-artifact@v7`），README 同步 |
+| console 黑框 | `windows_subsystem` 从 `lib.rs` 移回 `main.rs`，修复 |
+| C-03（L1→L2 时间锚） | 起草后按用户要求整体回退，commit 已从历史移除 |
+| C-04（反转文案） | 改为谜语式「被你吃掉的，才是她想说的。/ 留下来的，是念给别人听的。」四语言 |
+| 冲突一（章首过场） | `narration` 章首逐条渲染（L0 教学、L5「只剩你了」等自此可见） |
+| 冲突二（章末结算台词） | `settlement` 四语言落地，`chapters.json` 的 `结算台词` 移除避免双语双源 |
+| 未追踪缺口 | 登记入 `issue.md`（L1 失败侧台词、A-06、R-12、存档导出/导入、PWA、母语审校） |

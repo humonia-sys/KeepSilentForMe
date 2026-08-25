@@ -444,10 +444,10 @@
 | 文本 | 不跑 NLP；JSON/表格驱动预设遮挡（`script/chapters.json`） |
 | 交互 | 当前为单一文本节点 + `Range.getClientRects()` 命中层 → 拖拽黑条吸附 |
 | **当前章节切换** | `pageBindings` 选择整页 PNG，HTML overlay 显示段落结束和结局 |
-| 关末视频 | 目标设计仍为 `video/V*.mp4`；当前 Demo 尚未接入播放器 |
-| 存档 | **localStorage** 保存章节、台词、旗标、吃字记录和结局 ID；暂无视频已看标记 |
+| 关末视频 | `web/video/manifest.json` 驱动 K01-K22：章节过场、结局与反转，见 §11.8 运行时映射 |
+| 存档 | **localStorage** 保存章节、台词、旗标、吃字记录、`endingSeed` 和结局 ID；`revealSeen` 记录反转已看 |
 | 部署 | 静态托管（Vercel / Netlify / GitHub Pages）一键发布 |
-| 本地化 | 首发中文；英文需重做 zone（按短语而非按字）；视频旁白用 UI 本地化更省 |
+| 本地化 | 简体中文 + en/de/ru（Beta，待母语审校）；切换语言不丢进度、旗标、结局与私语 |
 
 ### 5.2 Web技术栈优势
 

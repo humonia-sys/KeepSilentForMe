@@ -48,7 +48,7 @@
 
 | 项目 | 当前状态 |
 |------|----------|
-| `main` 验证提交 | `a01040a` |
+| `main` 验证提交 | `8de10ba`（待最新 Actions 运行验证） |
 | Web Demo | [GitHub Pages 在线版](https://avrovadonz2026.github.io/KeepSilentForMe/web/) |
 | Pages 验证 | [运行 30751537982](https://github.com/AvrovaDonz2026/KeepSilentForMe/actions/runs/30751537982) · 成功 |
 | 桌面打包验证 | [运行 30751537976](https://github.com/AvrovaDonz2026/KeepSilentForMe/actions/runs/30751537976) · 成功 |

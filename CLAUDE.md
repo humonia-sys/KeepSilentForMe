@@ -129,11 +129,14 @@ python3 -m http.server 8765 --directory .
 # Open http://127.0.0.1:8765/web/
 
 # Static and JavaScript validation
+npm run validate:runtime-js
+node scripts/validate-chapters.mjs
+npm run validate:locales
 python3 art/v4/scenes/validate.py
 python3 art/v4/playable/validate.py
-node scripts/validate-chapters.mjs
-node --check web/js/main.js
-node --check scripts/prepare-tauri.mjs
+node scripts/validate-audio.mjs
+node scripts/validate-runtime-videos.mjs
+npm run tauri:prepare
 
 # Desktop preparation (full Rust build requires the Tauri toolchain)
 npm ci
