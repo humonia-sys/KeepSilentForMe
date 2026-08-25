@@ -53,7 +53,7 @@
 | Echo Digest 回归 | Chrome 桌面/390×844 移动视口；点击、鼠标拖拽、触摸拖拽、刷新恢复 · 通过 |
 | 直播滚屏回归 | L2/L4；Chrome 1280×900 / 390×844；动态人数、循环滚动、响应式尺寸 · 通过 |
 | BGM 回归 | 4 首 CC0 本地音频；标题、L0-L5、四结局绑定；章节交叉淡化、独立音量和总开关 · 通过 |
-| Windows 产物 | `keep-silent-for-me-windows-x64-nsis` |
+| Windows 产物 | `keep-silent-for-me-windows-x64-nsis`、`keep-silent-for-me-windows-x64-portable` |
 | Linux 产物 | `keep-silent-for-me-linux-amd64-appimage`、`keep-silent-for-me-linux-amd64-deb` |
 | 签名/自动更新 | 未启用 |
 
@@ -318,10 +318,12 @@ GitHub Pages 工作流位于
 首版不启用签名和自动更新。
 Windows CI 当前生成 NSIS 安装包；NSIS 不依赖 hosted runner 上易失的 WiX/MSI 工具链，
 需要 MSI 时可在具备 WiX 的 Windows 环境中单独运行 `tauri build --bundles msi`。
+Windows CI 同时把 release 主程序压成便携 zip（解压即玩，需系统已装 WebView2 Runtime，
+Win10/11 默认自带）。
 
 最新 Tauri 运行已通过，产物名称为：
 
-- Windows x64：`keep-silent-for-me-windows-x64-nsis`
+- Windows x64：`keep-silent-for-me-windows-x64-nsis`、`keep-silent-for-me-windows-x64-portable`
 - Linux amd64：`keep-silent-for-me-linux-amd64-appimage`、`keep-silent-for-me-linux-amd64-deb`
 
 ```bash
