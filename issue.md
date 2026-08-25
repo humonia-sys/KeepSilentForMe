@@ -771,6 +771,8 @@ manifest 验证。
 - **A-05 / R-02（L2 结算）**：`web/js/runtime/70-flow.js` 的 `chapterResult()` 增加 L2 分支——`hate_leak < 2` 下播，否则「直播事故」重试层（新增 `ui.retryLive*` 四语言文案，并加入 `validate-locales` 白名单）并 `restartChapter()` 重开；重开时清零 `hate_leak`。
 - **A-01 / A-05（L4 结算）**：新增 `chapterL4Route()`——`apology_perform >= apology_refuse` 走 `L4_perform_to_L5`，否则 `L4_refuse_to_L5`；实现台本「混线取较高」，平票取表演为补足台本未定义的边界；「另一路 1s 噪声」已以运行时近似落地（见下）。
 - **L4 混线 1s 噪声（近似落地）**：`chapterL4Mixed()`（两路均≥1）时，进路线过场前播 1s Web Audio 白噪声 + 画面闪黑（`playNoiseBurst` + `.stage.is-noise`）；真视频插片仍留媒体层。
+- **结局台词叠字落地**：`game.endings` 对齐台本——A 补「她：……这次我说完了。她取回语言。」，C 改台本字幕「请求还在，人不必在。」，C' 补「只剩条与字灰」（四语言）。
+- **数据解耦（chapters.json）**：移除纯视觉注释字段（顶层 `rules`、各章 `creature`/`bg`/`demo`/`演出`/`narration_note`/`special_note`/`旁白`、行级 `face`），仅保留规则与稳定 ID；`sync.note` 更新，注释内容由 `台本.md` 独有。
 - **A-02（ending_seed）**：实现种子微调——选 L5_S03 zone 时捕获 `ending_seed`（A/B），L5_S06 结算时 `resolveEnding()`：seed A 与 `B_alienate` 相斥改 `A_separate`、seed B 与 `A_separate` 相斥改 `B_alienate`，C/C' 不受影响；`endingSeed` 随存档持久化，恢复时校验为 A/B，无种子 zone 显式清空。`chapters.json` 与台本的种子字段保留。
 - **L1/L4 门槛（B-02 / 提交 cba3b51）**：按提交 `cba3b51`「for better player flow」的设计意图统一为 L1 `pass>=3 && fail<2`、L4 `apology_perform>=1 || apology_refuse>=1`——代码、`chapters.json`、`台本.md` 与四语言 objective 全部同步；L4 运行时仍为「取较高、平票取表演」。
 - **已验证**：`node --check` 全部运行时文件、`validate-chapters`、`validate-locales` 通过。

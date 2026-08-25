@@ -1238,10 +1238,10 @@
       }
     },
     "endings": {
-      "A_separate": "Sie zieht ihre Hand zurück.",
+      "A_separate": "(Sie) ...Diesmal habe ich es selbst zu Ende gesagt. Sie nimmt ihre Sprache zurück.",
       "B_alienate": "Was bleibt, ist kein „Ich“.",
-      "C_consume": "Bitte: eine leere Hülle.",
-      "C_cold": "Die Identität ist ausgelöscht."
+      "C_consume": "Die Bitte bleibt. Der Mensch muss nicht.",
+      "C_cold": "Die Identität ist ausgelöscht. Es bleiben nur der Balken und die aschgrauen Wörter."
     },
     "chapterOverlays": {
       "L0": {

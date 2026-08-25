@@ -54,7 +54,7 @@
 *   在静态数据层面，翻译文本和逻辑结构是分开的。但在运行时 (`10-locale.js`)，系统使用 `joinLocalizedChapters` 将本地化 JSON 中的 `chapter.title`, `narration`, 行级 `raw` 和块级 `text` **直接合并 (Deep Merge)** 到了基础的 `chapters.json` 对象树上。
 
 ### 差异点 2：被废弃的全局规则 (Deprecated Rules)
-*   `chapters.json` 顶层包含的 `rules` 字段，如 `"zones_per_line": "3-4"`、`"only_action": "drag_black_bar_continuous"`、`"nlp": false`，在实际的 `main.js` 或 runtime 中**完全未被读取和使用**。现行逻辑按 `line.zones.length` 动态取 zone 数量（并非硬编码 4），并直接做字符截取匹配。
+*   `chapters.json` 曾包含顶层 `rules` 字段，如 `"zones_per_line": "3-4"`、`"only_action": "drag_black_bar_continuous"`、`"nlp": false`，在实际的 `main.js` 或 runtime 中**完全未被读取和使用**。现行逻辑按 `line.zones.length` 动态取 zone 数量（并非硬编码 4），并直接做字符截取匹配。该字段已随 2026-08-25 数据解耦从 `chapters.json` 移除（连同 `creature`/`bg`/`demo`/`face`/`演出` 等视觉注释），设计内容由 `台本.md` 独有。
 
 ### 差异点 3：占位符与截断机制
 *   剧本当中本地化必须严守 `remainMode`。对于 Semantic（语义）模式，本地化可以自由调整被消音后剩下的句子，以保证自然；但对于 Mechanical（机械）模式，运行时会使用极其死板的字符串减法，这对本地化团队是巨大的挑战，也是落地实现中非常脆弱的一环。
