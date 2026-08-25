@@ -117,7 +117,7 @@ function startRevealCaptions(token) {
     [0, captions[0] ?? ""],
     [2000, captions[1] ?? ""],
     [5000, captions[2] ?? ""],
-    [7600, whispers.length ? t("ui.swallowed", { text: whispers.join(" · ") }) : (captions[3] ?? "")],
+    [7600, whispers.length ? whispers.join(" · ") : (captions[3] ?? "")],
     [9200, captions[4] ?? ""],
   ];
   for (const [delay, text] of cues) {
