@@ -105,6 +105,8 @@ __pycache__/
 .venv/
 
 # Local MiniMax H3 video outputs (keep prompt and review docs committed).
+# 生成源片与历史快照只留本地；运行时只取 web/video/kling/。
+/video/generated/
 
 # Agent skills with API keys
 .agents/
