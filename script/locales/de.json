@@ -30,6 +30,9 @@
         "settlement": [
           "(Interviewer A) Kommen Sie morgen zur Probe.",
           "(Sie) Danke. ... Ein paar dieser Sätze hätten alles ruiniert, wären sie herausgekommen."
+        ],
+        "settlementFail": [
+          "(Interviewer A) Wir melden uns."
         ]
       },
       "L2": {

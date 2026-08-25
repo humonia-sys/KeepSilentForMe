@@ -126,10 +126,12 @@ for (const [localeId, , , relativePath] of expectedLocales) {
   for (const chapter of baseChapters) {
     const localChapter = pack.game?.chapters?.[chapter.id];
     if (!isNonEmptyString(localChapter?.title)) errors.push(`${prefix} is missing title for ${chapter.id}`);
-    if (localChapter?.settlement !== undefined
-      && (!Array.isArray(localChapter.settlement) || !localChapter.settlement.length
-        || localChapter.settlement.some((item) => !isNonEmptyString(item)))) {
-      errors.push(`${prefix} ${chapter.id} settlement must be a non-empty string array`);
+    for (const key of ["settlement", "settlementFail"]) {
+      if (localChapter?.[key] !== undefined
+        && (!Array.isArray(localChapter[key]) || !localChapter[key].length
+          || localChapter[key].some((item) => !isNonEmptyString(item)))) {
+        errors.push(`${prefix} ${chapter.id} ${key} must be a non-empty string array`);
+      }
     }
   }
   for (const line of baseLines) {

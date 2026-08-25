@@ -30,7 +30,8 @@ function finishChapter() {
     hideOverlay();
     state.locked = true;
     if (chapter.id === "L1") {
-      void playChapterOutro("L1_fail_retry", () => {
+      const failLines = Array.isArray(chapter.settlementFail) ? chapter.settlementFail : [];
+      const playRetry = () => void playChapterOutro("L1_fail_retry", () => {
         if (currentChapter()?.id !== "L1") return;
         state.locked = true;
         syncLanguageControls();
@@ -42,6 +43,9 @@ function finishChapter() {
           t("ui.retryInterviewToast"),
         );
       });
+      // 台本 L1 失败分支：先播「A：我们再联系。」，再进失败过场与重试层。
+      if (failLines.length) startNarration(failLines, playRetry);
+      else playRetry();
     } else if (chapter.id === "L2") {
       // 台本第二章：hate_leak≥2 即直播事故，提示后重开本章（无独立事故视频）。
       syncLanguageControls();

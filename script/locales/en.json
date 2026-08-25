@@ -30,6 +30,9 @@
         "settlement": [
           "(Interviewer A) Come in tomorrow for the trial.",
           "(Her) Thank you. ... A few of those sentences would have ruined everything if they had gotten out."
+        ],
+        "settlementFail": [
+          "(Interviewer A) We'll be in touch."
         ]
       },
       "L2": {
