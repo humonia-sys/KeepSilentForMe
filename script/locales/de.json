@@ -1258,7 +1258,13 @@
       },
       "L3": {
         "title": "Die Tür schließt sich wieder",
-        "copy": "Der Freund hat nicht alles gefragt. Du hast nicht alles beantwortet."
+        "copy": "Der Freund hat nicht alles gefragt. Du hast nicht alles beantwortet.",
+        "variants": {
+          "risk": { "copy": "Der Satz – „da ist noch jemand“ – ging mit dem Freund die Treppe hinunter." },
+          "distrust": { "copy": "Der Freund stellte sie nicht zur Rede. Er ging nur schneller, als er gekommen war." },
+          "distance": { "copy": "Sie verabschiedete sich durch die Tür. Durch den Regen blickte der Freund nicht zurück." },
+          "crack": { "copy": "Als die Tür zufiel, klang der Riss lauter als der Regen." }
+        }
       },
       "L4": {
         "title": "Die Entschuldigung ist vorbei",

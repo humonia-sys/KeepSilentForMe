@@ -30,6 +30,22 @@ function chapterL4Mixed() {
   return perform >= 1 && refuse >= 1;
 }
 
+// 台本第三章结算变体：L3 无胜负，章末覆盖层文案按关系旗标回显一次。
+function l3RelationshipCopy(overlay) {
+  const variants = overlay?.variants ?? null;
+  if (!variants) return overlay?.copy ?? t("ui.nextChapterCopy");
+  const trust = Number(state.flags.trust) || 0;
+  const distance = Number(state.flags.distance) || 0;
+  const secretRisk = Number(state.flags.secret_risk) || 0;
+  const crack = Number(state.flags.crack) || 0;
+  let key = "";
+  if (secretRisk >= 2) key = "risk";
+  else if (trust < 0) key = "distrust";
+  else if (distance >= 2) key = "distance";
+  else if (crack >= 5) key = "crack";
+  return variants[key]?.copy || overlay?.copy || t("ui.nextChapterCopy");
+}
+
 function finishChapter() {
   const chapter = currentChapter();
   if (LIVE_CHAPTER_IDS.has(chapter?.id)) hideLiveChat();
@@ -69,7 +85,9 @@ function finishChapter() {
   if (state.chapterIndex >= state.chapters.length - 1) return;
   const chapterOverlay = localeValue(`game.chapterOverlays.${chapter.id}`, null);
   const title = chapterOverlay?.title ?? t("ui.nextChapter");
-  const copy = chapterOverlay?.copy ?? t("ui.nextChapterCopy");
+  const copy = chapter.id === "L3"
+    ? l3RelationshipCopy(chapterOverlay)
+    : (chapterOverlay?.copy ?? t("ui.nextChapterCopy"));
   const action = MEMORY_CHAPTER_IDS.has(chapter.id)
     ? () => openMemoryOverlay(chapter)
     : () => void playChapterOutroThenAdvance(chapter);

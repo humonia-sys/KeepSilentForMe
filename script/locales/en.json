@@ -1258,7 +1258,13 @@
       },
       "L3": {
         "title": "The Door Closes Again",
-        "copy": "Her friend did not finish asking. You did not finish answering."
+        "copy": "Her friend did not finish asking. You did not finish answering.",
+        "variants": {
+          "risk": { "copy": "That line — \"there's someone else\" — went down the stairs with the friend." },
+          "distrust": { "copy": "The friend didn't call her out. She just left faster than she came." },
+          "distance": { "copy": "She said goodbye through the door. Through the rain, the friend didn't look back." },
+          "crack": { "copy": "After the door closed, the crack sounded louder than the rain." }
+        }
       },
       "L4": {
         "title": "Apology Over",
