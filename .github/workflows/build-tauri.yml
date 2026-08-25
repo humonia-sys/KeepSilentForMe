@@ -54,7 +54,12 @@ jobs:
         if: matrix.platform == 'linux'
         run: |
           sudo apt-get update
-          sudo apt-get install -y pkg-config libwebkit2gtk-4.1-dev libappindicator3-dev librsvg2-dev patchelf xdg-utils
+          sudo apt-get install -y pkg-config libwebkit2gtk-4.1-dev libappindicator3-dev librsvg2-dev patchelf xdg-utils ffmpeg
+
+      - name: Install ffmpeg (Windows)
+        if: matrix.platform == 'windows'
+        shell: pwsh
+        run: choco install ffmpeg -y --no-progress
 
       - name: Install frontend and Tauri dependencies
         run: npm ci
